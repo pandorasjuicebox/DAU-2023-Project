@@ -9,22 +9,24 @@ bool HitBox::Collides(HitBox hitBox)
 	return false;
 }
 
-float HitBox::GetBoxLeft()
+float* HitBox::GetBoxLeft()
 {
-	return 0.0f;
+	return boxLeft;
 }
 
-float HitBox::GetBoxHeight()
+float* HitBox::GetBoxHeight()
 {
-	return 0.0f;
+	return boxHeight;
 }
 
 void HitBox::SetBoxTop(float &boxTop)
 {
+	this->boxTop = &boxTop;
 }
 
 void HitBox::SetBoxLeft(float &boxLeft)
 {
+	this->boxLeft = &boxLeft;
 }
 
 void HitBox::SetBoxBottom(float &boxBottom)

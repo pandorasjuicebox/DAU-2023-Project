@@ -6,8 +6,8 @@
 class HitBox {
 public:
 	bool Collides(HitBox hitBox);
-	float GetBoxLeft();
-	float GetBoxHeight();
+	float* GetBoxLeft();
+	float* GetBoxHeight();
 	void SetBoxTop(float &boxTop);
 	void SetBoxLeft(float &boxLeft);
 	void SetBoxBottom(float &boxBottom);
