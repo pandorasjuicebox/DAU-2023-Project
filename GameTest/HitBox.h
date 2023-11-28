@@ -12,7 +12,7 @@ public:
 	void SetBoxLeft(float &boxLeft);
 	void SetBoxBottom(float &boxBottom);
 	void SetBoxRight(float &boxRight);
-	void SetBoxHeight(float &height);
+	void SetBoxHeight(float & boxHeight);
 
 private: 
 	float* boxTop;

@@ -31,12 +31,15 @@ void HitBox::SetBoxLeft(float &boxLeft)
 
 void HitBox::SetBoxBottom(float &boxBottom)
 {
+	this->boxBottom = &boxBottom;
 }
 
 void HitBox::SetBoxRight(float &boxRight)
 {
+	this->boxRight = &boxRight;
 }
 
-void HitBox::SetBoxHeight(float &height)
+void HitBox::SetBoxHeight(float &boxHeight)
 {
+	this->boxHeight = &boxHeight;
 }
