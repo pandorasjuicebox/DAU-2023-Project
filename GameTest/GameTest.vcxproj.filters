@@ -52,6 +52,7 @@
     </ClInclude>
     <ClInclude Include="HitBox.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="LevelManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">
