@@ -5,7 +5,11 @@
 class GameObject {
 public: 
 	void SetMoveable(); //false by default
-	bool IsMoveable(); //return isMoveable value
+	bool* IsMoveable(); //return isMoveable value
+	bool* IsActive(); 
+	bool* IsVisibleObj();
+	void SetObjVisibility(bool toggleVis);
+
 	//void SetObjHealth(int healthTotal);
 	//void ReduceObjHealth(int lostHealth);
 
@@ -16,8 +20,8 @@ private:
 	//int objHealth; note: still thinking about this variable
 	bool isObstacle = false; //default
 	//TODO: make a HitBox object
-	bool isActiveObject = true; //is it interactable or not
-	bool isVisibleObject = true; //is it on the map right now
+	bool isActiveObj = true; //is it interactable or not
+	bool isVisibleObj = true; //is it on the map right now
 	bool isMoveable = false; //default
 	const char* spriteFileName; 
 
