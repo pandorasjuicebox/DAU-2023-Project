@@ -5,7 +5,6 @@
 
 bool HitBox::Collides(HitBox hitBox)
 {
-
 	return false;
 }
 

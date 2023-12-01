@@ -21,8 +21,8 @@
     <ClCompile Include="stb_image\stb_image.cpp">
       <Filter>stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="HitBox.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="HitBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -50,8 +50,8 @@
     <ClInclude Include="stb_image\stb_image.h">
       <Filter>stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="HitBox.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HitBox.h" />
     <ClInclude Include="LevelManager.h" />
   </ItemGroup>
   <ItemGroup>
