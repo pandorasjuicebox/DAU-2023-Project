@@ -3,6 +3,8 @@
 
 Card::Card()
 {
+	cardValue = GetCardValue(true); //assigned random number
+	cardStatus = 0; //normal status
 }
 
 void Card::SetCardValue(int value)
