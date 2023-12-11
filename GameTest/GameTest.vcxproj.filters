@@ -61,6 +61,7 @@
     <ClInclude Include="..\..\..\..\..\..\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\stdlib.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="Encylopedia.h" />
+    <ClInclude Include="Article.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">
@@ -74,5 +75,8 @@
     <Text Include="ReadMe.txt">
       <Filter>NextAPI</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string" />
   </ItemGroup>
 </Project>
