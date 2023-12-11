@@ -27,7 +27,7 @@ protected:
 	CSimpleSprite *objectSprite;
 	bool isMoveable = false;
 	//TODO: make a HitBox object
-	bool isActive = true; //is it interactable or not
+	bool isActive = false; //is it interactable or not
 	bool isVisible = true; //is it on the map right now
 	bool isCrossable = false; //default
 	const char* spriteFileName;

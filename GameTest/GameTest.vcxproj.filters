@@ -25,6 +25,7 @@
     <ClCompile Include="HitBox.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Card.cpp" />
+    <ClCompile Include="Deck.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -59,6 +60,7 @@
     <ClInclude Include="Card.h" />
     <ClInclude Include="..\..\..\..\..\..\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\stdlib.h" />
     <ClInclude Include="Deck.h" />
+    <ClInclude Include="Encylopedia.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">

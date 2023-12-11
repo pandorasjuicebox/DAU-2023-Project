@@ -185,6 +185,7 @@
     <ClInclude Include="App\SimpleSprite.h" />
     <ClInclude Include="Card.h" />
     <ClInclude Include="Deck.h" />
+    <ClInclude Include="Encylopedia.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HitBox.h" />
     <ClInclude Include="LevelManager.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="App\SimpleSound.cpp" />
     <ClCompile Include="App\SimpleSprite.cpp" />
     <ClCompile Include="Card.cpp" />
+    <ClCompile Include="Deck.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTest.cpp" />
     <ClCompile Include="HitBox.cpp" />

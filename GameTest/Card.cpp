@@ -21,6 +21,11 @@ void Card::SetCardStatus(int statNumber)
 	cardStatus = statNumber;
 }
 
+void Card::SetDrawn(bool state)
+{
+	isDrawn = state;
+}
+
 int Card::GetCardStatus()
 {
 	return cardStatus;
@@ -45,6 +50,11 @@ int Card::GetCardValue(bool isRandom)
 		value = cardValue; 
 	}
 	return value;
+}
+
+bool Card::isCardDrawn()
+{
+	return this->isDrawn;
 }
 
 

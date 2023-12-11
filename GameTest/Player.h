@@ -2,11 +2,12 @@
 
 #include "GameObject.h"
 #include "Card.h"
+#include "Deck.h"
 
 class Player : public GameObject {
 public:
-	//Player(const char* fileName, unsigned int nColumns, unsigned int nRows);
+	Player(Deck &deck);
 
 private:
-	Card skillList[4];
+	Deck* playerDeck;
 };
