@@ -1,7 +1,8 @@
 #pragma once
 
-#include "GameObject.h"
+
 #include "stdafx.h"
+#include "GameObject.h"
 #include "App/app.h"
 #include "stdlib.h"
 

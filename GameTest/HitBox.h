@@ -3,6 +3,8 @@
 // Header file for the HitBox class.
 //-----------------------------------------------------------------------------
 
+#include "stdafx.h"
+
 class HitBox {
 public:
 	bool Collides(HitBox hitBox);

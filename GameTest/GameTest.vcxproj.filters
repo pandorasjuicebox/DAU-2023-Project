@@ -26,6 +26,8 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Deck.cpp" />
+    <ClCompile Include="Article.cpp" />
+    <ClCompile Include="Encylopedia.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -62,6 +64,7 @@
     <ClInclude Include="Deck.h" />
     <ClInclude Include="Encylopedia.h" />
     <ClInclude Include="Article.h" />
+    <ClInclude Include="Node.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">

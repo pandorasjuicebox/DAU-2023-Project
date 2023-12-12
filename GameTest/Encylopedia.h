@@ -1,12 +1,19 @@
 #pragma once
-#include "Article.h"
 
-	//For now: hardcoded Article data for encyclopedia
+#include "stdafx.h"
+#include "Article.h"
+#include <iostream>
+
+	//For now: hardcoded Article data for Encyclopedia
 	//Future: Read it through a txt
 class Encyclopedia {
 public:
 	Encyclopedia();
+	Article GetArticle(int index);
+
+	void UnlockArticle(int index);
+	void PrintArticles(); //prints out all unlocked
 
 private:
-	Article* articles;
+	Article articles[40];
 };
