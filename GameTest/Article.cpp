@@ -11,22 +11,47 @@ Article::Article(int index, std::string desc, int enemyEff, int playerEff)
 
 std::string *Article::GetDescription(int index)
 {
-	return description;
+	return this->description;
 }
 
 int Article::GetEnemyEffect()
 {
-	return effectOnEnemy;
+	return this->effectOnEnemy;
 }
 
 int Article::GetPlayerEffect()
 {
-	return effectOnPlayer;
+	return this->effectOnPlayer;
+}
+
+int Article::AddCardModifier(int enemyEff, int playerEff)
+{
+	int modifiedValue = 0; 
+
+	// 0 doesn't change any values, nonzeroes do.
+	if (enemyEff > 0 || enemyEff < 0) {
+		modifiedValue = GetEnemyEffect() + enemyEff;
+	}
+	else if (playerEff > 0 || playerEff < 0) {
+		modifiedValue = GetPlayerEffect() + playerEff;
+	}
+
+	return modifiedValue;
 }
 
 bool Article::isArticleLocked()
 {
-	return isLocked;
+	return this->isLocked;
+}
+
+bool Article::HasPlayerEffect()
+{
+	return effectOnPlayer > 0;
+}
+
+bool Article::HasEnemyEffect()
+{
+	return effectOnEnemy > 0;
 }
 
 void Article::setArticleLock(bool toggle)

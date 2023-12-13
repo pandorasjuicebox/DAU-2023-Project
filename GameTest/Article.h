@@ -14,8 +14,11 @@ public:
 	std::string *GetDescription(int index);
 	int GetEnemyEffect(); 
 	int GetPlayerEffect();
+	int AddCardModifier(int enemyEff, int playerEff);
 
 	bool isArticleLocked();
+	bool HasPlayerEffect();
+	bool HasEnemyEffect();
 
 	void setArticleLock(bool toggle);
 

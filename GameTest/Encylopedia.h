@@ -3,6 +3,8 @@
 #include "stdafx.h"
 #include "Article.h"
 #include <iostream>
+#include <array>
+using namespace std;
 
 	//For now: hardcoded Article data for Encyclopedia
 	//Future: Read it through a txt
@@ -15,5 +17,6 @@ public:
 	void PrintArticles(); //prints out all unlocked
 
 private:
-	Article articles[40];
+	//Article articles[40];
+	array<Article, 40> articles;
 };

@@ -64,7 +64,6 @@
     <ClInclude Include="Deck.h" />
     <ClInclude Include="Encylopedia.h" />
     <ClInclude Include="Article.h" />
-    <ClInclude Include="Node.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">
@@ -81,5 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string" />
+    <None Include="..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\utility" />
   </ItemGroup>
 </Project>

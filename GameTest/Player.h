@@ -9,9 +9,11 @@
 class Player : public GameObject {
 public:
 	Player(Deck &deck);
+	void ReceiveEffect(int points);
+
 
 private:
 	Deck* playerDeck;
 	Encyclopedia playerEncyclopedia;
-
+	int health = 10;
 };
