@@ -64,6 +64,7 @@
     <ClInclude Include="Deck.h" />
     <ClInclude Include="Encylopedia.h" />
     <ClInclude Include="Article.h" />
+    <ClInclude Include="Enemy.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">

@@ -1,16 +1,27 @@
 #include "stdafx.h"
 #include "Encylopedia.h"
 
-Encyclopedia::Encyclopedia()
+Encyclopedia::Encyclopedia(int type)
 {
 	//for (int i = 0; i < 40; i++) {
 	//	articles[i] = Article(i, "This is article:" + i, 1, 0);
 	//}
+	//int input = type;
+	
+	if (type == 1) { //Player
+		int counter = 0;
+		for (auto& i : articles) {
+			i = Article(counter, "This is article:" + counter, 1, 0, 0, false, false);;
+			counter++;
+		}
+	}
+	else if (type == 2) { //Enemy Type 1
+		articles.at(0) = Article(0, "Stab [ ] once per round.", 0, 0, 0, false, false);
+		articles.at(1) = Article(1, "Inflict [ ] even-numbered damage.", 0, 0, 0, true, false);
 
-	int counter = 0;
-	for (auto& i: articles) {
-		i = Article(counter, "This is article:" + counter, 1, 0);
-		counter++;
+	}
+	else if (type == 3) { //Enemy Type 2
+
 	}
 }
 

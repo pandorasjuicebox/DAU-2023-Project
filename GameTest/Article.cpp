@@ -1,12 +1,23 @@
 #include "stdafx.h"
 #include "Article.h"
 
-Article::Article(int index, std::string desc, int enemyEff, int playerEff)
+//Article::Article(int index, std::string desc, int enemyEff, int playerEff, int numFloor, int mustBeEven, int mustBeOdd);
+//{
+//	articleNumber = index;
+//	description = &desc;
+//	effectOnEnemy = enemyEff;
+//	effectOnPlayer = playerEff;
+//}
+
+Article::Article(int index, string desc, int enemyEff, int playerEff, int numFloor, bool mustBeEven, bool mustBeOdd)
 {
 	articleNumber = index;
 	description = &desc;
 	effectOnEnemy = enemyEff;
 	effectOnPlayer = playerEff;
+	floor = numFloor;
+	even = mustBeEven;
+	odd = mustBeOdd;
 }
 
 std::string *Article::GetDescription(int index)
@@ -22,6 +33,11 @@ int Article::GetEnemyEffect()
 int Article::GetPlayerEffect()
 {
 	return this->effectOnPlayer;
+}
+
+int Article::GetFloor()
+{
+	return floor;
 }
 
 int Article::AddCardModifier(int enemyEff, int playerEff)
@@ -52,6 +68,16 @@ bool Article::HasPlayerEffect()
 bool Article::HasEnemyEffect()
 {
 	return effectOnEnemy > 0;
+}
+
+bool Article::MustBeEven()
+{
+	return even;
+}
+
+bool Article::MustBeOdd()
+{
+	return odd;
 }
 
 void Article::setArticleLock(bool toggle)

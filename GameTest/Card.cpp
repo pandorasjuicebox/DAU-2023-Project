@@ -4,8 +4,8 @@
 
 Card::Card()
 {
-	cardValue = GetCardValue(true); //assigned random number
 	cardStatus = 0; //normal status
+	cardValue = GetRandomCardValue();
 }
 
 void Card::SetCardValue(int value)
@@ -25,6 +25,7 @@ void Card::SetCardStatus(int statNumber)
 void Card::SetDrawn(bool state)
 {
 	isDrawn = state;
+	this->isActive = true;
 }
 
 int Card::GetCardStatus()
@@ -37,18 +38,15 @@ int Card::GetCardValue()
 	return cardValue;
 }
 
-int Card::GetCardValue(bool isRandom)
+int Card::GetRandomCardValue()
 {
 	int value = 0;
 
 	//if random is OK and card status is 0 (DEFAULT) or 2 (DISABLED BUT UNLOCKABLE)
 	//change the values to something random
-	if ((isRandom && cardStatus == 0) || (isRandom && cardStatus == 2)){ 
-		value = rand() % valueSetSize + 1; //change the value
+	if ((cardStatus == 0) || (cardStatus == 2)){ 
+		value = rand() % possibleValues.size() + 1; //change the value
 		cardValue = value;
-	}
-	else { //don't change the value; for error catching
-		value = cardValue; 
 	}
 	return value;
 }

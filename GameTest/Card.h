@@ -2,29 +2,48 @@
 
 
 #include "stdafx.h"
+#include <array>
 #include "GameObject.h"
 #include "App/app.h"
 #include "stdlib.h"
+using namespace std;
 
 class Card : public GameObject {
 public: 
 	Card();
-	void SetCardValue(int value); //manual card override
-	void SetCardStatus(int statNumber); //manual status override
+
+	//Set Card value with the inputted value
+	void SetCardValue(int value); 
+	
+	//Set the status of the card
+	// 0 - default or normal
+	// 1 - Disabled (for this fight)
+	// 2 - Disabled, but can be enabled at a health cost
+	void SetCardStatus(int statNumber); 
+
+	//Set if a Card is drawn/active
 	void SetDrawn(bool state);
 
+	//Get the status of the card
+	// 0 - default or normal
+	// 1 - Disabled (for this fight)
+	// 2 - Disabled, but can be enabled at a health cost
 	int GetCardStatus();
 
-	//Overloaded Methods
-	int GetCardValue(); //get the cardValue
-	int GetCardValue(bool isRandom); //get the cardValue that is now randomised if isRandom is true
+	//get the cardValue
+	int GetCardValue(); 
+	//get the cardValue that is now randomised
+	int GetRandomCardValue(); 
 	
+	//Is the card drawn?
 	bool isCardDrawn();
 
 private:
 	int cardValue = 1; //default
-	int possibleValues[4] = { 1,2,3,4 };
-	int valueSetSize = sizeof(possibleValues) / sizeof(int);
+	array<int, 4> possibleValues = { 1,2,3,4 };
+	//int possibleValues[4] = { 1,2,3,4 };
+	//int valueSetSize = sizeof(possibleValues) / sizeof(int);
+
 	int cardStatus = 0; //0 is default or normal
 	bool isDrawn = false;
 };
