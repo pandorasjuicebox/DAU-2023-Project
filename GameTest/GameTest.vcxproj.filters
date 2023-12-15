@@ -23,6 +23,8 @@
     <ClCompile Include="GameTest.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Deck.cpp" />
+    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="Map.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -54,6 +56,10 @@
     <ClInclude Include="Card.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="CardElements.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="MapElements.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">

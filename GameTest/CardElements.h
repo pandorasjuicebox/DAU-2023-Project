@@ -1,5 +1,5 @@
 #pragma once
-
+#include "stdafx.h"
 //Attack(?) type
 enum Color {
 	RED, GREEN, YELLOW, GREY
