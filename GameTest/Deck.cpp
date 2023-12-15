@@ -1,96 +1,53 @@
 #include "stdafx.h"
 #include "Deck.h"
 
-Deck::Deck()
+
+//Deck::Deck()
+//{
+//	//cardAmount = CARD_SIZE;
+//}
+
+void Deck::CreateFullDeck()
 {
-	maxCards.at(cardCount) = Card();
-	cardCount++;
-}
-
-int Deck::DrawCard()
-{
-	Card card;
-	int value = 0;
-
-	//for (int i = 0; i < cardCount; i++) {
-	//	card = maxCards[i];
-	//	if (!card.isCardDrawn()) { //if the card is not drawn, draw it.
-	//		value = card.GetCardValue();
-	//		card.SetDrawn(true);
-	//		break;
-	//	}
-	//}
-
-	for (auto& i : maxCards) {
-		if (!i.isCardDrawn()) {
-			value = i.GetCardValue();
-			i.SetDrawn(true);
-			break;
+	//108 cards, 12 sets of cards 1-9
+	//4 sets of color 1
+	//4 sets of color 2
+	//4 sets of color 3
+	int counter = 1;
+	int typeCounter = 0;
+	Color colors[4] = { RED, GREEN, YELLOW, GREY };
+	for (auto& i : deckOfCards) {
+		if (counter <= 7) {
+			i.SetNumber(counter);
+			i.SetColor(colors[typeCounter]);
+			cardAmount++;
+			if (counter == 7) {
+				counter = 0;
+				typeCounter++;
+			}
+			counter++;
 		}
 	}
-	return value; //if 0, then 
 }
 
-bool Deck::NewCard()
+bool Deck::AddCard(Card card)
 {
 	bool result = false;
-	if (cardCount < 4) {
-		maxCards.at(cardCount) = Card();
-		cardCount++;
+	if (cardAmount < deckOfCards.max_size()) {
+		deckOfCards.at(cardAmount) = card;
 		result = true;
-	}
-	else {
-		//TODO: comment out later
-		cout << "Limit exceeded.";
 	}
 	return result;
 }
 
-void Deck::SetCardStatus(int cardStatus) 
+void Deck::ShuffleCards()
 {
-	for (auto& i : maxCards) {
-	
-		if (i.isCardDrawn() && i.GetCardValue() == 0) {
-			i.SetCardStatus(cardStatus); 
-			
-		}
-		//Disabled but can be enabled at a health cost
-		else if (i.isCardDrawn() && cardStatus == 2) {
-			i.SetCardStatus(cardStatus); //since cardStat 2 can still be enabled during the fight
-		}
-		
-	}
+	shuffle(deckOfCards.begin(), deckOfCards.end(),default_random_engine());
 }
 
-void Deck::SetMultipleCardStatus(int cardStatus, int numCards)
+Card Deck::Draw()
 {
-	int cardsAffected = numCards;
-	int counter = 0;
-
-	for (auto& i : maxCards) {
-		if (counter < numCards) {
-			//Disabled for the fight
-			if (i.isCardDrawn() && cardStatus == 1) {
-				i.SetCardStatus(1);
-				counter++;
-			}
-			//Disabled but can be enabled at a health cost
-			else if (i.isCardDrawn() && cardStatus == 2) {
-				i.SetCardStatus(2);
-				counter++;
-			}
-		}
-	}
+	Card drawnCard = deckOfCards.at(cardAmount);
+	cardAmount--;
+	return drawnCard;
 }
-
-void Deck::ResetDeck()
-{
-	for (auto& i : maxCards) {
-		if (i.isCardDrawn()) {
-			i.SetCardStatus(0); //enable all cards again
-		}
-	}
-}
-
-
-

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="GameTest.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="App\app.cpp">
       <Filter>NextAPI</Filter>
@@ -21,13 +20,9 @@
     <ClCompile Include="stb_image\stb_image.cpp">
       <Filter>stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="HitBox.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="GameTest.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Deck.cpp" />
-    <ClCompile Include="Article.cpp" />
-    <ClCompile Include="Encylopedia.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -55,16 +50,10 @@
     <ClInclude Include="stb_image\stb_image.h">
       <Filter>stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="HitBox.h" />
-    <ClInclude Include="LevelManager.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Card.h" />
     <ClInclude Include="..\..\..\..\..\..\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\stdlib.h" />
+    <ClInclude Include="Card.h" />
     <ClInclude Include="Deck.h" />
-    <ClInclude Include="Encylopedia.h" />
-    <ClInclude Include="Article.h" />
-    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="CardElements.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">
@@ -82,5 +71,6 @@
   <ItemGroup>
     <None Include="..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string" />
     <None Include="..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\utility" />
+    <None Include="..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector" />
   </ItemGroup>
 </Project>

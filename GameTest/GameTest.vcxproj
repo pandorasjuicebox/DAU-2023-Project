@@ -184,14 +184,8 @@
     <ClInclude Include="App\SimpleSound.h" />
     <ClInclude Include="App\SimpleSprite.h" />
     <ClInclude Include="Card.h" />
+    <ClInclude Include="CardElements.h" />
     <ClInclude Include="Deck.h" />
-    <ClInclude Include="Encylopedia.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Article.h" />
-    <ClInclude Include="HitBox.h" />
-    <ClInclude Include="LevelManager.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="stb_image\stb_image.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -202,14 +196,9 @@
     <ClCompile Include="App\SimpleController.cpp" />
     <ClCompile Include="App\SimpleSound.cpp" />
     <ClCompile Include="App\SimpleSprite.cpp" />
-    <ClCompile Include="Article.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Deck.cpp" />
-    <ClCompile Include="Encylopedia.cpp" />
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTest.cpp" />
-    <ClCompile Include="HitBox.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="stb_image\stb_image.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -221,6 +210,7 @@
   <ItemGroup>
     <None Include="..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string" />
     <None Include="..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\utility" />
+    <None Include="..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

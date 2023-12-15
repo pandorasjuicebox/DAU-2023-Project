@@ -7,12 +7,14 @@
 #include <math.h>  
 //------------------------------------------------------------------------
 #include "app\app.h"
+using namespace App;
 //------------------------------------------------------------------------
 
 //------------------------------------------------------------------------
 // Sample data....
 //------------------------------------------------------------------------
 CSimpleSprite *testSprite;
+
 enum
 {
 	ANIM_FORWARDS,
@@ -20,6 +22,12 @@ enum
 	ANIM_LEFT,
 	ANIM_RIGHT,
 };
+
+//enum class CardValue {
+//	ONE = 1, TWO = 2, THREE = 3, FOUR = 4
+//};
+
+
 //------------------------------------------------------------------------
 
 //------------------------------------------------------------------------
@@ -29,7 +37,9 @@ void Init()
 {
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
-	testSprite = App::CreateSprite(".\\TestData\\Test.bmp", 8, 4);
+	//testPlayer = 
+	testSprite = CreateSprite(".\\TestData\\Test.bmp", 8, 4);
+
 	testSprite->SetPosition(400.0f, 400.0f);
 	float speed = 1.0f / 15.0f;
 	testSprite->CreateAnimation(ANIM_BACKWARDS, speed, { 0,1,2,3,4,5,6,7 });
@@ -129,22 +139,23 @@ void Render()
 	//------------------------------------------------------------------------
 	// Example Line Drawing.
 	//------------------------------------------------------------------------
-	static float a = 0.0f;
-	float r = 1.0f;
-	float g = 1.0f;
-	float b = 1.0f;
-	a += 0.1f;
-	for (int i = 0; i < 20; i++)
-	{
+	
+	//static float a = 0.0f;
+	//float r = 1.0f;
+	//float g = 1.0f;
+	//float b = 1.0f;
+	//a += 0.1f;
+	//for (int i = 0; i < 20; i++)
+	//{
 
-		float sx = 200 + sinf(a + i * 0.1f)*60.0f;
-		float sy = 200 + cosf(a + i * 0.1f)*60.0f;
-		float ex = 700 - sinf(a + i * 0.1f)*60.0f;
-		float ey = 700 - cosf(a + i * 0.1f)*60.0f;
-		g = (float)i / 20.0f;
-		b = (float)i / 20.0f;
-		App::DrawLine(sx, sy, ex, ey,r,g,b);
-	}
+		//float sx = 200 + sinf(a + i * 0.1f)*60.0f;
+		//float sy = 200 + cosf(a + i * 0.1f)*60.0f;
+		//float ex = 700 - sinf(a + i * 0.1f)*60.0f;
+		//float ey = 700 - cosf(a + i * 0.1f)*60.0f;
+		//g = (float)i / 20.0f;
+		//b = (float)i / 20.0f;
+		//App::DrawLine(sx, sy, ex, ey,r,g,b);
+	//}
 }
 //------------------------------------------------------------------------
 // Add your shutdown code here. Called when the APP_QUIT_KEY is pressed.
