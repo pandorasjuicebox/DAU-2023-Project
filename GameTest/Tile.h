@@ -6,6 +6,7 @@
 using namespace std;
 using namespace App;
 
+//David: make it an int (better)
 struct Coord {
 	float x; float y;
 };
