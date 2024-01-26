@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "MobUnit.h"
 
-MobUnit::MobUnit(string name, int health, float speed, float xCoord, float yCoord, float scale, CSimpleSprite* sprite)
+MobUnit::MobUnit(string name, int health, float speed, float scale, Coord spawnPoint, CSimpleSprite* sprite)
 {
 	unitName = name;
 	unitHealth = health;
 	unitSprite = sprite;
-	xPos = xCoord;
-	yPos = yCoord;
+	xPos = spawnPoint.x;
+	yPos = spawnPoint.y;
 	unitSpeed = speed;
 	unitScale = scale;
 
@@ -22,6 +22,29 @@ CSimpleSprite* MobUnit::GetUnitSprite()
 
 void MobUnit::Update(float dTime, float playerX, float playerY)
 {
+	float playerPositionX = playerX;
+	float playerPositionY = playerY;
+	float acceleration = unitSpeed * dTime;
+
+
+	if (xPos < playerPositionX) {
+		unitSprite->GetPosition(xPos, yPos);
+		unitSprite->SetPosition(xPos + acceleration, yPos + acceleration);
+	}
+	if (xPos > playerPositionX) {
+		unitSprite->GetPosition(xPos, yPos);
+		unitSprite->SetPosition(xPos - acceleration, yPos - acceleration);
+	}
+	if (yPos < playerPositionY) {
+		unitSprite->GetPosition(xPos, yPos);
+		unitSprite->SetPosition(xPos + acceleration, yPos + acceleration);
+
+	}
+	if (yPos > playerPositionY) {
+		unitSprite->GetPosition(xPos, yPos);
+		unitSprite->SetPosition(xPos - acceleration, yPos - acceleration);
+	}
+
 }
 
 void MobUnit::SetPlayerLocation(float xCoord, float yCoord)

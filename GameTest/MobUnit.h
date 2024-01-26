@@ -10,7 +10,7 @@ using namespace App;
 class MobUnit {
 public:
 	//Constructor
-	MobUnit(string name, int health, float speed, float xCoord, float yCoord, float scale, CSimpleSprite* sprite);
+	MobUnit(string name, int health, float speed,  float scale, Coord spawnPoint, CSimpleSprite* sprite);
 	CSimpleSprite* GetUnitSprite();
 	void Update(float dTime, float playerX, float playerY);
 	//Store the location of the player
