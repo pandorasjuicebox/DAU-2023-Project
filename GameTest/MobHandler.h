@@ -13,10 +13,11 @@ public:
 
 	void AddMobSprite(string name, int health, float speed, CSimpleSprite* sprite);
 	void AnimateMobUnit(string name, const std::vector<int>& backwards, const std::vector<int>& left, const std::vector<int>& right, const std::vector<int>& forwards);
-	void AddTreeLocations(vector<Coord>& positions);
+	void AddSpawnLocations(vector<Coord>& positions);
 	CSimpleSprite* GetSprite(string name);
 	int GetMobHealth(string name);
 	int GetMobSpeedList(string name);
+	Coord getSpawnLocation();
 
 private:
 
@@ -25,7 +26,7 @@ private:
 	map< string, int > mobHealthList;
 	map< string, float > mobSpeedList;
 
-	vector<Coord>treeLocations;
+	vector<Coord>spawnLocations;
 
 };
 

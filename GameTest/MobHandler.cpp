@@ -21,9 +21,9 @@ CSimpleSprite* MobHandler::GetSprite(string name)
 	return spriteList[name];
 }
 
-void MobHandler::AddTreeLocations(vector<Coord>& locations)
+void MobHandler::AddSpawnLocations(vector<Coord>& locations)
 {
-	treeLocations = locations;
+	spawnLocations = locations;
 }
 
 int MobHandler::GetMobHealth(string name)
@@ -34,4 +34,9 @@ int MobHandler::GetMobHealth(string name)
 int MobHandler::GetMobSpeedList(string name)
 {
 	return mobSpeedList[name];
+}
+
+Coord MobHandler::getSpawnLocation()
+{
+	return spawnLocations.at(rand() & spawnLocations.size());
 }
