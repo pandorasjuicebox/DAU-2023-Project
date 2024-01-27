@@ -1,11 +1,12 @@
 #include "stdafx.h"
 #include "MobHandler.h"
 
-void MobHandler::AddMobSprite(string name, int health, float speed, CSimpleSprite* sprite)
+void MobHandler::AddMobSprite(string name, int health, float speed, float scale, CSimpleSprite* sprite)
 {
 	spriteList[name] = sprite;
 	mobHealthList[name] = health;
 	mobSpeedList[name] = speed;
+	mobScale[name] = scale;
 }
 
 void MobHandler::AnimateMobUnit(string name, const std::vector<int>& backwards, const std::vector<int>& left, const std::vector<int>& right, const std::vector<int>& forwards)
@@ -31,9 +32,14 @@ int MobHandler::GetMobHealth(string name)
 	return mobHealthList[name];
 }
 
-int MobHandler::GetMobSpeedList(string name)
+float MobHandler::GetMobSpeedList(string name)
 {
 	return mobSpeedList[name];
+}
+
+float MobHandler::GetMobScale(string name)
+{
+	return mobScale[name];
 }
 
 Coord MobHandler::getSpawnLocation()

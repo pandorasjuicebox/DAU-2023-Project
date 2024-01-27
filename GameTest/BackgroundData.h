@@ -33,11 +33,26 @@ private:
 	//multiples of 32
 	vector<Coord>coordinates;
 
+	vector<Coord>outerBorderFrame; //coordinates of non-playable area
+	vector<Coord>innerBorderFrame; 
+
 	//Stores decor, border, and floor sprites as key-value pairs
 	//Used by the AddDecorSprite, AddBorderSprite, and AddFloorSprite methods
-	map< string, CSimpleSprite*> decor;
-	map< string, CSimpleSprite* >border;
-	map< string, CSimpleSprite* >floor;
+	map< string, CSimpleSprite* > decor;
+	map< string, CSimpleSprite* > border;
+	map< string, CSimpleSprite* > floor;
+
+	//Outer Border
+	float yLowerOuterBorder = 0; 
+	float yUpperOuterBorder = 0; 
+	float xLeftOuterBorder = 0; 
+	float xRightOuterBorder = 0; 
+
+	//Inner Border
+	float yLowerInnerBorder = 0;
+	float yUpperInnerBorder = 0;
+	float xLeftInnerBorder = 0;
+	float xRightInnerBorder = 0;
 
 	// Set up coordination system that goes by multiples of 32
 	// This is what the Tiles will use to position themselves across the game area
