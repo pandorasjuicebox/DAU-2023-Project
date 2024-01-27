@@ -22,11 +22,29 @@ public:
 	void AddDecorSprite(CSimpleSprite* sprite, float scale, string spriteName);
 	void AddFloorSprite(CSimpleSprite* sprite, float scale, string spriteName);
 
+	void CreateBorders(vector<Coord> &outerBorder, vector<Coord> &innerBorder);
+
 	//Getters
 	CSimpleSprite* GetBorderSprite(string spriteName);
 	CSimpleSprite* GetDecorSprite(string spriteName);
 	CSimpleSprite* GetFloorSprite(string spriteName);
+	
+	float MaxXValue(vector<Coord>list);
+	float MinXValue(vector<Coord>list);
+	float MaxYValue(vector<Coord>list);
+	float MinYValue(vector<Coord>list);
+
 	int GetSize();
+
+	float GetLowerOuterBorderY();
+	float GetUpperOuterBorderY();
+	float GetLeftOuterBorderX();
+	float GetRightOuterBorderX();
+
+	float GetLowerInnerBorderY();
+	float GetUpperInnerBorderY();
+	float GetLeftInnerBorderX();
+	float GetRightInnerBorderX();
 
 private:
 	//Stores x and y coord
