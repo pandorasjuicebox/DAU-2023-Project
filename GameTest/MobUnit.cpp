@@ -1,15 +1,26 @@
 #include "stdafx.h"
 #include "MobUnit.h"
 
-MobUnit::MobUnit(string name, int health, float speed, float scale, Coord spawnPoint, CSimpleSprite* sprite)
+MobUnit::MobUnit(MobHandler* mbHandler, BackgroundData* backData) 
 {
+	playerXPos = 0;
+	playerYPos = 0;
+
+	mobDirectory = mbHandler;
+	bgData = backData;
+}
+
+void MobUnit::AddMobUnit(string name)
+{
+	Coord spawnPoint = bgData->GetSpawnLocation();
+
 	unitName = name;
-	unitHealth = health;
-	unitSprite = sprite;
+	unitHealth = mobDirectory->GetMobHealth(name);
+	unitSprite = mobDirectory->GetSprite(name);
 	xPos = spawnPoint.x;
 	yPos = spawnPoint.y;
-	unitSpeed = speed;
-	unitScale = scale;
+	unitSpeed = mobDirectory->GetMobSpeedList(name);
+	unitScale = mobDirectory->GetMobScale(name);
 
 	unitSprite->SetPosition(xPos, yPos);
 	unitSprite->SetScale(unitScale);
@@ -25,24 +36,28 @@ void MobUnit::Update(float dTime, float playerX, float playerY)
 	float playerPositionX = playerX;
 	float playerPositionY = playerY;
 	float acceleration = unitSpeed * dTime;
+	unitSprite->Update(dTime);
 
 
 	if (xPos < playerPositionX) {
 		unitSprite->GetPosition(xPos, yPos);
-		unitSprite->SetPosition(xPos + acceleration, yPos + acceleration);
+		unitSprite->SetPosition(xPos + acceleration, yPos);
+		unitSprite->SetAnimation(ANIM_RIGHT);
 	}
 	if (xPos > playerPositionX) {
 		unitSprite->GetPosition(xPos, yPos);
-		unitSprite->SetPosition(xPos - acceleration, yPos - acceleration);
+		unitSprite->SetPosition(xPos - acceleration, yPos);
+		unitSprite->SetAnimation(ANIM_LEFT);
 	}
 	if (yPos < playerPositionY) {
 		unitSprite->GetPosition(xPos, yPos);
-		unitSprite->SetPosition(xPos + acceleration, yPos + acceleration);
-
+		unitSprite->SetPosition(xPos, yPos + acceleration);
+		unitSprite->SetAnimation(ANIM_FORWARDS);
 	}
 	if (yPos > playerPositionY) {
 		unitSprite->GetPosition(xPos, yPos);
-		unitSprite->SetPosition(xPos - acceleration, yPos - acceleration);
+		unitSprite->SetPosition(xPos, yPos - acceleration);
+		unitSprite->SetAnimation(ANIM_BACKWARDS);
 	}
 
 }

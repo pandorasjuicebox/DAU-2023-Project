@@ -23,10 +23,11 @@ public:
 	void AddDecorSprite(CSimpleSprite* sprite, float scale, string spriteName);
 	void AddFloorSprite(CSimpleSprite* sprite, float scale, string spriteName);
 
-	void CreateBorders(vector<Coord> outerBorder, vector<Coord> innerBorder);
+	void CreateBorders();
 
 	void AddOuterBorderLocation(float x, float y);
 	void AddInnerBorderLocation(float x, float y);
+	void AddFloorLocation(float x, float y);
 
 	//Getters
 	CSimpleSprite* GetBorderSprite(string spriteName);
@@ -35,25 +36,20 @@ public:
 
 	Coord GetOuterBorderLocation(int i);
 	Coord GetInnerBorderLocation(int i);
-	int getOuterBorderSize();
-	int getInnerBorderSize();
-	
-	float MaxXValue(vector<Coord>list);
-	float MinXValue(vector<Coord>list);
-	float MaxYValue(vector<Coord>list);
-	float MinYValue(vector<Coord>list);
+	Coord GetFloorLocation(int i);
+	int GetOuterBorderSize();
+	int GetInnerBorderSize();
+	int GetFloorSize();
+
+	float GetMaxInnerX();
+	float GetMinInnerX();
+	float GetMaxInnerY();
+	float GetMinInnerY();
 
 	int GetSize();
 
-	float GetLowerOuterBorderY();
-	float GetUpperOuterBorderY();
-	float GetLeftOuterBorderX();
-	float GetRightOuterBorderX();
-
-	float GetLowerInnerBorderY();
-	float GetUpperInnerBorderY();
-	float GetLeftInnerBorderX();
-	float GetRightInnerBorderX();
+	vector<Coord> GetSpawnPoints();
+	Coord GetSpawnLocation();
 
 private:
 	//Stores x and y coord
@@ -62,6 +58,9 @@ private:
 
 	vector<Coord>outerBorderFrame; //coordinates of non-playable area
 	vector<Coord>innerBorderFrame; 
+	vector<Coord>floorArea;
+
+	vector<Coord>spawnPoints;
 
 	//Stores decor, border, and floor sprites as key-value pairs
 	//Used by the AddDecorSprite, AddBorderSprite, and AddFloorSprite methods
@@ -70,19 +69,26 @@ private:
 	map< string, CSimpleSprite* > floor;
 
 	//Outer Border
-	float yLowerOuterBorder = 0; 
-	float yUpperOuterBorder = 0; 
-	float xLeftOuterBorder = 0; 
-	float xRightOuterBorder = 0; 
+	float yLowerOuterBorder; 
+	float yUpperOuterBorder; 
+	float xLeftOuterBorder; 
+	float xRightOuterBorder; 
 
 	//Inner Border
-	float yLowerInnerBorder = 0;
-	float yUpperInnerBorder = 0;
-	float xLeftInnerBorder = 0;
-	float xRightInnerBorder = 0;
+	float yLowerInnerBorder;
+	float yUpperInnerBorder;
+	float xLeftInnerBorder;
+	float xRightInnerBorder;
 
 	// Set up coordination system that goes by multiples of 32
 	// This is what the Tiles will use to position themselves across the game area
 	float startValue = 32;
+
+	float MaxXValue(vector<Coord>list);
+	float MinXValue(vector<Coord>list);
+	float MaxYValue(vector<Coord>list);
+	float MinYValue(vector<Coord>list);
+	void CreateCardinalPoints();
+
 };
 

@@ -8,6 +8,16 @@ BackgroundData::BackgroundData() {
 	for (int i = 0; i < startValue; i++) {
 		coordinates.push_back({ startValue * i , startValue * i });
 	}
+
+
+	yLowerOuterBorder = 0;
+	yUpperOuterBorder = 0;
+	xLeftOuterBorder = 0;
+	xRightOuterBorder = 0;
+	yLowerInnerBorder = 0;
+	yUpperInnerBorder = 0;
+	xLeftInnerBorder = 0;
+	xRightInnerBorder = 0;
 }
 
 float BackgroundData::GetX(int index) {
@@ -22,44 +32,14 @@ int BackgroundData::GetSize() {
 	return coordinates.size();
 }
 
-float BackgroundData::GetLowerOuterBorderY()
+vector<Coord> BackgroundData::GetSpawnPoints()
 {
-	return yLowerOuterBorder;
+	return spawnPoints;
 }
 
-float BackgroundData::GetUpperOuterBorderY()
+Coord BackgroundData::GetSpawnLocation()
 {
-	return yUpperOuterBorder;
-}
-
-float BackgroundData::GetLeftOuterBorderX()
-{
-	return xLeftOuterBorder;
-}
-
-float BackgroundData::GetRightOuterBorderX()
-{
-	return xRightOuterBorder;
-}
-
-float BackgroundData::GetLowerInnerBorderY()
-{
-	return yLowerInnerBorder;
-}
-
-float BackgroundData::GetUpperInnerBorderY()
-{
-	return yUpperInnerBorder;
-}
-
-float BackgroundData::GetLeftInnerBorderX()
-{
-	return xLeftInnerBorder;
-}
-
-float BackgroundData::GetRightInnerBorderX()
-{
-	return xRightInnerBorder;
+	return spawnPoints.at(rand() % 4);
 }
 
 float BackgroundData::MaxXValue(vector<Coord> list)
@@ -140,10 +120,8 @@ void BackgroundData::AddFloorSprite(CSimpleSprite* sprite, float scale, string s
 	floor[spriteName]->SetScale(scale);
 }
 
-void BackgroundData::CreateBorders(vector<Coord> outerBorder, vector<Coord> innerBorder)
+void BackgroundData::CreateBorders()
 {
-	outerBorderFrame = outerBorder;
-	innerBorderFrame = innerBorder;
 
 	yLowerOuterBorder = MinYValue(outerBorderFrame);
 	yUpperOuterBorder = MaxYValue(outerBorderFrame);
@@ -154,6 +132,20 @@ void BackgroundData::CreateBorders(vector<Coord> outerBorder, vector<Coord> inne
 	yUpperInnerBorder = MaxYValue(innerBorderFrame);
 	xLeftInnerBorder = MinXValue(innerBorderFrame);
 	xRightInnerBorder = MaxXValue(innerBorderFrame);
+
+	CreateCardinalPoints();
+}
+
+void BackgroundData::CreateCardinalPoints()
+{
+	//North at 0
+	spawnPoints.push_back({(xRightOuterBorder / 2),yUpperOuterBorder});
+	//South at 1
+	spawnPoints.push_back({(xRightOuterBorder/2), yLowerOuterBorder});
+	//East at 2
+	spawnPoints.push_back({xRightOuterBorder,(yUpperOuterBorder / 2)});
+	//West at 3
+	spawnPoints.push_back({ xLeftOuterBorder, (yUpperOuterBorder / 2) });
 }
 
 void BackgroundData::AddOuterBorderLocation(float x, float y)
@@ -166,6 +158,12 @@ void BackgroundData::AddInnerBorderLocation(float x, float y)
 {
 	Coord coordinates = { x,y };
 	innerBorderFrame.push_back(coordinates);
+}
+
+void BackgroundData::AddFloorLocation(float x, float y)
+{
+	Coord coordinates = { x,y };
+	floorArea.push_back(coordinates);
 }
 
 CSimpleSprite* BackgroundData::GetBorderSprite(string spriteName) {
@@ -190,12 +188,43 @@ Coord BackgroundData::GetInnerBorderLocation(int i)
 	return innerBorderFrame.at(i);
 }
 
-int BackgroundData::getOuterBorderSize()
+Coord BackgroundData::GetFloorLocation(int i)
+{
+	return floorArea.at(i);
+}
+
+int BackgroundData::GetOuterBorderSize()
 {
 	return outerBorderFrame.size();
 }
 
-int BackgroundData::getInnerBorderSize()
+int BackgroundData::GetInnerBorderSize()
 {
 	return innerBorderFrame.size();
 }
+
+int BackgroundData::GetFloorSize()
+{
+	return floorArea.size();
+}
+
+float BackgroundData::GetMaxInnerX()
+{
+	return xRightInnerBorder;
+}
+
+float BackgroundData::GetMinInnerX()
+{
+	return xLeftInnerBorder;
+}
+
+float BackgroundData::GetMaxInnerY()
+{
+	return yUpperInnerBorder;
+}
+
+float BackgroundData::GetMinInnerY()
+{
+	return yLowerInnerBorder;
+}
+

@@ -22,11 +22,6 @@ CSimpleSprite* MobHandler::GetSprite(string name)
 	return spriteList[name];
 }
 
-void MobHandler::AddSpawnLocations(vector<Coord>& locations)
-{
-	spawnLocations = locations;
-}
-
 int MobHandler::GetMobHealth(string name)
 {
 	return mobHealthList[name];
@@ -42,7 +37,3 @@ float MobHandler::GetMobScale(string name)
 	return mobScale[name];
 }
 
-Coord MobHandler::getSpawnLocation()
-{
-	return spawnLocations.at(rand() & spawnLocations.size());
-}

@@ -18,9 +18,6 @@ using namespace App;
 using namespace std;
 //------------------------------------------------------------------------
 
-//CSimpleSprite *testSprite;
-
-
 CSimpleSprite* playerSprite;
 CSimpleSprite* tileWall;
 CSimpleSprite* borderDecor;
@@ -29,6 +26,10 @@ CSimpleSprite* gameFloor;
 Player* playerObject;
 BackgroundData* bgData;
 MobHandler* mobHandler;
+MobUnit* mobUnits;
+
+const int columns = 32;
+const int rows = 25;
 
 //------------------------------------------------------------------------
 // Called before first update. Do any initial setup here.
@@ -37,6 +38,7 @@ void Init()
 {
 	bgData = new BackgroundData();
 	mobHandler = new MobHandler();
+	mobUnits = new MobUnit(mobHandler, bgData);
 
 	float lowerInnerXOffset = 25;
 	float lowerInnerYOffset = 20;
@@ -65,19 +67,18 @@ void Init()
 	//Enemy Mobs ----------------
 	mobHandler->AddMobSprite("docile_skeleton", 1, (1.0f / 20.0f), 2.0f, CreateSprite(".\\TestData\\docile_skeleton.png", 6, 1));
 	mobHandler->AnimateMobUnit("docile_skeleton", { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 });
-
 	//---------------------------
 
 
 	//Set up outer borders --------
-	for (int i = 0; i < 32; i++) { //column
-		for (int k = 0; k < 25; k++) { //row
+	for (int i = 0; i < columns; i++) { 
+		for (int k = 0; k < rows; k++) { 
 			//Upper Wall Border
 			if (i == 30 || i == 31 || k == 24 || k == 23) { bgData->AddOuterBorderLocation(bgData->GetX(i), bgData->GetY(k)); }
 		}
 	}
-	for (int i = 0; i < 32; i++) { //column
-		for (int k = 0; k < 25; k++) { //row
+	for (int i = 0; i < columns; i++) { 
+		for (int k = 0; k < rows; k++) { //row
 			//Wall border (Lower and Sides)
 			if (i == 0 || i == 1 || k == 0 || k == 1) { bgData->AddOuterBorderLocation(bgData->GetX(i), bgData->GetY(k)); }
 		}
@@ -85,26 +86,26 @@ void Init()
 	// ----------------------------
 	
 	//Set up inner border ---------
-	//Upper Border Trees
-	for (int i = 0; i < 32; i++) {
-		for (int k = 0; k < 25; k++) {
+	//Upper Border Decor
+	for (int i = 0; i < columns; i++) {
+		for (int k = 0; k < rows; k++) {
 			if ((i > 1) && (i < 22) && (k == 21)) {
 				bgData->AddInnerBorderLocation((bgData->GetX(i) + upperInnerXOffset), (bgData->GetY(k) + upperInnerYOffset));
 				upperInnerXOffset = upperInnerXOffset + ((borderDecor->GetWidth() / 4));
 			}
 		}
 	}
-	//Side Border Trees
-	for (int i = 32; i > 1; i--) {
+	//Side Border Decor
+	for (int i = columns; i > 1; i--) {
 		for (int k = 21; k > 2; k--) {
 			if (((i == 2) || (i == 28)) && ((k >= 2) || (k <= 10))) {
 				bgData->AddInnerBorderLocation((bgData->GetX(i) + sideInnerXOffset), (bgData->GetY(k)));
 			}
 		}
 	}
-	//Lower Border Trees and Lower + Side Wall Borders
-	for (int i = 0; i < 32; i++) { //column
-		for (int k = 0; k < 25; k++) { //row
+	//Lower Border Decor
+	for (int i = 0; i < columns; i++) { 
+		for (int k = 0; k < rows; k++) { 
 			//Lower Border Trees
 			if ((i > 1) && (i < 22) && (k == 2)) {
 				bgData->AddInnerBorderLocation(bgData->GetX(i) + lowerInnerXOffset, bgData->GetY(k) + lowerInnerYOffset );
@@ -114,6 +115,15 @@ void Init()
 	}
 	//-----------------------------
 
+	//Set up floor
+	for (int i = 3; i < columns-3; i++) {
+		for (int k = 0; k < rows-3; k++) {
+			bgData->AddFloorLocation(bgData->GetX(i), bgData->GetY(k));
+		}
+	}
+
+	bgData->CreateBorders();
+	mobUnits->AddMobUnit("docile_skeleton");
 }
 
 //------------------------------------------------------------------------
@@ -130,7 +140,8 @@ void Update(float deltaTime)
 		//gameFloor = bgData->GetBorderSprite(1);
 	}
 
-
+	mobUnits->Update(deltaTime, playerObject->GetXPos(), playerObject->GetYPos());
+	
 	//------------------------------------------------------------------------
 	// Sample Sound.
 	//------------------------------------------------------------------------
@@ -147,21 +158,31 @@ void Update(float deltaTime)
 //------------------------------------------------------------------------
 void Render()
 {	
-
-	for (int i = 0; i < bgData->getOuterBorderSize(); i++) {
+	//Draw the floor
+	for (int i = 0; i < bgData->GetFloorSize(); i++) {
+		float xVal = bgData->GetFloorLocation(i).x;
+		float yVal = bgData->GetFloorLocation(i).y;
+		gameFloor->SetPosition(xVal, yVal);
+		gameFloor->Draw();
+	}
+	//Draw the outer border
+	for (int i = 0; i < bgData->GetOuterBorderSize(); i++) {
 		float xVal = bgData->GetOuterBorderLocation(i).x;
 		float yVal = bgData->GetOuterBorderLocation(i).y;
 		tileWall->SetPosition(xVal,yVal);
 		tileWall->Draw();
 	}
-
-	for (int i = 0; i < bgData->getInnerBorderSize(); i++) {
+	//Draw the inner bordering decor
+	for (int i = 0; i < bgData->GetInnerBorderSize(); i++) {
 		float xVal = bgData->GetInnerBorderLocation(i).x;
 		float yVal = bgData->GetInnerBorderLocation(i).y;
 		borderDecor->SetPosition(xVal, yVal);
 		borderDecor->Draw();
 	}
 
+	mobUnits->GetUnitSprite()->Draw();
+
+	//Draw the player
 	playerSprite->Draw();
 
 	//------------------------------------------------------------------------

@@ -2,6 +2,8 @@
 #include "stdafx.h"
 #include "app/app.h"
 #include "Definitions.h"
+#include "MobHandler.h"
+#include "BackgroundData.h"
 #include <string>
 #include <vector>
 using namespace std;
@@ -10,7 +12,8 @@ using namespace App;
 class MobUnit {
 public:
 	//Constructor
-	MobUnit(string name, int health, float speed,  float scale, Coord spawnPoint, CSimpleSprite* sprite);
+	MobUnit(MobHandler* mbHandler, BackgroundData* backData);
+	void AddMobUnit(string name);
 	CSimpleSprite* GetUnitSprite();
 	void Update(float dTime, float playerX, float playerY);
 	//Store the location of the player
@@ -22,6 +25,8 @@ public:
 
 private:
 
+	MobHandler* mobDirectory;
+	BackgroundData* bgData;
 	int unitHealth;
 	string unitName;
 	CSimpleSprite* unitSprite;
@@ -30,7 +35,7 @@ private:
 	float unitSpeed;
 	float unitScale;
 
-	float playerXPos = 0;
-	float playerYPos = 0;
+	float playerXPos;
+	float playerYPos;
 
 };
