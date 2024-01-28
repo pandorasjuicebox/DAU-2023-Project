@@ -103,6 +103,7 @@ float BackgroundData::MaxYValue(vector<Coord> list)
 	}
 
 	maxVal = *max_element(yValues.begin(), yValues.end());
+	cout << maxVal;
 
 	return maxVal;
 }
@@ -139,7 +140,7 @@ void BackgroundData::AddFloorSprite(CSimpleSprite* sprite, float scale, string s
 	floor[spriteName]->SetScale(scale);
 }
 
-void BackgroundData::CreateBorders(vector<Coord> &outerBorder, vector<Coord> &innerBorder)
+void BackgroundData::CreateBorders(vector<Coord> outerBorder, vector<Coord> innerBorder)
 {
 	outerBorderFrame = outerBorder;
 	innerBorderFrame = innerBorder;
@@ -155,6 +156,18 @@ void BackgroundData::CreateBorders(vector<Coord> &outerBorder, vector<Coord> &in
 	xRightInnerBorder = MaxXValue(innerBorderFrame);
 }
 
+void BackgroundData::AddOuterBorderLocation(float x, float y)
+{
+	Coord coordinates = { x,y };
+	outerBorderFrame.push_back(coordinates);
+}
+
+void BackgroundData::AddInnerBorderLocation(float x, float y)
+{
+	Coord coordinates = { x,y };
+	innerBorderFrame.push_back(coordinates);
+}
+
 CSimpleSprite* BackgroundData::GetBorderSprite(string spriteName) {
 	return border[spriteName];
 }
@@ -165,4 +178,24 @@ CSimpleSprite* BackgroundData::GetDecorSprite(string spriteName) {
 
 CSimpleSprite* BackgroundData::GetFloorSprite(string spriteName) {
 	return floor[spriteName];
+}
+
+Coord BackgroundData::GetOuterBorderLocation(int i)
+{
+	return outerBorderFrame.at(i);
+}
+
+Coord BackgroundData::GetInnerBorderLocation(int i)
+{
+	return innerBorderFrame.at(i);
+}
+
+int BackgroundData::getOuterBorderSize()
+{
+	return outerBorderFrame.size();
+}
+
+int BackgroundData::getInnerBorderSize()
+{
+	return innerBorderFrame.size();
 }

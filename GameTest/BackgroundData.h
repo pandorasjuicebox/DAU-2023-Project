@@ -5,6 +5,7 @@
 #include <windows.h> 
 #include <vector>
 #include <string>
+#include <iostream>
 using namespace std;
 
 class BackgroundData
@@ -22,12 +23,20 @@ public:
 	void AddDecorSprite(CSimpleSprite* sprite, float scale, string spriteName);
 	void AddFloorSprite(CSimpleSprite* sprite, float scale, string spriteName);
 
-	void CreateBorders(vector<Coord> &outerBorder, vector<Coord> &innerBorder);
+	void CreateBorders(vector<Coord> outerBorder, vector<Coord> innerBorder);
+
+	void AddOuterBorderLocation(float x, float y);
+	void AddInnerBorderLocation(float x, float y);
 
 	//Getters
 	CSimpleSprite* GetBorderSprite(string spriteName);
 	CSimpleSprite* GetDecorSprite(string spriteName);
 	CSimpleSprite* GetFloorSprite(string spriteName);
+
+	Coord GetOuterBorderLocation(int i);
+	Coord GetInnerBorderLocation(int i);
+	int getOuterBorderSize();
+	int getInnerBorderSize();
 	
 	float MaxXValue(vector<Coord>list);
 	float MinXValue(vector<Coord>list);
