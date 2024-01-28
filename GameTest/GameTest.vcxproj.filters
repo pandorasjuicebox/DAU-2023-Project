@@ -25,6 +25,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="MobHandler.cpp" />
     <ClCompile Include="MobUnit.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -57,6 +58,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="MobHandler.h" />
     <ClInclude Include="MobUnit.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">
