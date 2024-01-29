@@ -14,6 +14,7 @@
 #include "BackgroundData.h"
 #include "MobHandler.h"
 #include "MobUnit.h"
+#include "Weapon.h"
 using namespace App;
 using namespace std;
 //------------------------------------------------------------------------
@@ -22,11 +23,13 @@ CSimpleSprite* playerSprite;
 CSimpleSprite* tileWall;
 CSimpleSprite* borderDecor;
 CSimpleSprite* gameFloor;
+CSimpleSprite* weaponSprite;
 
 Player* playerObject;
 BackgroundData* bgData;
 MobHandler* mobHandler;
 MobUnit* mobUnits;
+Weapon* playerWeapon;
 
 const int columns = 32;
 const int rows = 25;
@@ -51,6 +54,12 @@ void Init()
 	//positioned at the center
 	playerObject = new Player(CreateSprite(".\\TestData\\player_general_movement.png", 6, 6), bgData->GetX(bgData->GetSize() / 2), bgData->GetY(bgData->GetSize() / 2));
 	playerSprite = playerObject->GetPlayerSprite();
+
+	//Weapon -------------------
+	playerWeapon = new Weapon(bgData, 100, CreateSprite(".\\TestData\\bullet_north.png", 1, 1),"north");
+	playerWeapon->AddSprite(CreateSprite(".\\TestData\\bullet_south.png",1,1), "south");
+	playerWeapon->AddSprite(CreateSprite(".\\TestData\\bullet_west.png", 1, 1), "west");
+	playerWeapon->AddSprite(CreateSprite(".\\TestData\\bullet_east.png", 1, 1), "east");
 
 	//Border Tiles --------------
 	bgData->AddBorderSprite(CreateSprite(".\\TestData\\stone2_dark3.png", 1, 1), 1.5f, "dark_stone");
@@ -133,11 +142,28 @@ void Init()
 void Update(float deltaTime)
 {
 	playerObject->Update(deltaTime);
+	playerWeapon->Update(deltaTime);
 
-	if (IsKeyPressed(VK_SHIFT))
+	if (IsKeyPressed(0x46)) //If you press 'F' for fire
 	{
 		//playerSprite->SetPosition(x[15], y[15]);
 		//gameFloor = bgData->GetBorderSprite(1);
+		if (playerObject->GetPlayerFacing() == ANIM_LEFT) {
+			weaponSprite = playerWeapon->GetWeaponSprite("west");
+			playerWeapon->FireWeapon(playerObject->GetXPos(), playerObject->GetYPos(), bgData->GetMinInnerX(), playerObject->GetYPos());
+		}
+		if (playerObject->GetPlayerFacing() == ANIM_RIGHT) {
+			weaponSprite = playerWeapon->GetWeaponSprite("east");
+			playerWeapon->FireWeapon(playerObject->GetXPos(), playerObject->GetYPos(), bgData->GetMaxInnerX(), playerObject->GetYPos());
+		}
+		if (playerObject->GetPlayerFacing() == ANIM_FORWARDS) {
+			weaponSprite = playerWeapon->GetWeaponSprite("north");
+			playerWeapon->FireWeapon(playerObject->GetXPos(), playerObject->GetYPos(), playerObject->GetXPos(), bgData->GetMaxInnerY());
+		}
+		if (playerObject->GetPlayerFacing() == ANIM_BACKWARDS) {
+			weaponSprite = playerWeapon->GetWeaponSprite("south");
+			playerWeapon->FireWeapon(playerObject->GetXPos(), playerObject->GetYPos(), playerObject->GetXPos(), bgData->GetMinInnerY());
+		}
 	}
 
 	mobUnits->Update(deltaTime, playerObject->GetXPos(), playerObject->GetYPos());

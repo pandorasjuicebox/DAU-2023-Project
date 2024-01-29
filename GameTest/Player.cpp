@@ -35,6 +35,7 @@ void Player::Update(float dTime)
 		playerSprite->GetPosition(xPos, yPos);
 		xPos += 1.0f;
 		playerSprite->SetPosition(xPos, yPos);
+		playerFacing = ANIM_RIGHT;
 	}
 	if (App::GetController().GetLeftThumbStickX() < -0.5f)
 	{
@@ -43,6 +44,7 @@ void Player::Update(float dTime)
 		playerSprite->GetPosition(xPos, yPos);
 		xPos -= 1.0f;
 		playerSprite->SetPosition(xPos, yPos);
+		playerFacing = ANIM_LEFT;
 	}
 	if (App::GetController().GetLeftThumbStickY() > 0.5f)
 	{
@@ -51,6 +53,7 @@ void Player::Update(float dTime)
 		playerSprite->GetPosition(xPos, yPos);
 		yPos += 1.0f;
 		playerSprite->SetPosition(xPos, yPos);
+		playerFacing = ANIM_FORWARDS;
 	}
 	if (App::GetController().GetLeftThumbStickY() < -0.5f)
 	{
@@ -59,6 +62,7 @@ void Player::Update(float dTime)
 		playerSprite->GetPosition(xPos, yPos);
 		yPos -= 1.0f;
 		playerSprite->SetPosition(xPos, yPos);
+		playerFacing = ANIM_BACKWARDS;
 	}
 	if (App::GetController().CheckButton(XINPUT_GAMEPAD_DPAD_UP, false))
 	{
@@ -100,6 +104,11 @@ float Player::GetXPos()
 float Player::GetYPos()
 {
 	return yPos;
+}
+
+int Player::GetPlayerFacing()
+{
+	return playerFacing;
 }
 
 
