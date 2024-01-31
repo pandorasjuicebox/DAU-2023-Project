@@ -14,7 +14,6 @@
 #include "BackgroundData.h"
 #include "MobHandler.h"
 #include "MobUnit.h"
-#include "Weapon.h"
 using namespace App;
 using namespace std;
 //------------------------------------------------------------------------
@@ -50,16 +49,15 @@ void Init()
 	float sideInnerXOffset = 20;
 	float gameFloorXOffset = 20;
 
+	//Weapon -------------------
+	//playerWeapon = new Weapon(bgData, 100000, CreateSprite(".\\TestData\\bullet.png", 1, 1));
+	//weaponSprite = playerWeapon->GetWeaponSprite();
+
 	//The Player ---------------
 	//positioned at the center
-	playerObject = new Player(CreateSprite(".\\TestData\\player_general_movement.png", 6, 6), bgData->GetX(bgData->GetSize() / 2), bgData->GetY(bgData->GetSize() / 2));
+	playerObject = new Player(CreateSprite(".\\TestData\\player_full_sheet.png", 6, 10), bgData->GetX(bgData->GetSize() / 2), bgData->GetY(bgData->GetSize() / 2));
 	playerSprite = playerObject->GetPlayerSprite();
 
-	//Weapon -------------------
-	playerWeapon = new Weapon(bgData, 100, CreateSprite(".\\TestData\\bullet_north.png", 1, 1),"north");
-	playerWeapon->AddSprite(CreateSprite(".\\TestData\\bullet_south.png",1,1), "south");
-	playerWeapon->AddSprite(CreateSprite(".\\TestData\\bullet_west.png", 1, 1), "west");
-	playerWeapon->AddSprite(CreateSprite(".\\TestData\\bullet_east.png", 1, 1), "east");
 
 	//Border Tiles --------------
 	bgData->AddBorderSprite(CreateSprite(".\\TestData\\stone2_dark3.png", 1, 1), 1.5f, "dark_stone");
@@ -74,8 +72,9 @@ void Init()
 	gameFloor = bgData->GetFloorSprite("normal_grass");
 
 	//Enemy Mobs ----------------
-	mobHandler->AddMobSprite("docile_skeleton", 1, (1.0f / 20.0f), 2.0f, CreateSprite(".\\TestData\\docile_skeleton.png", 6, 1));
+	mobHandler->AddMobSprite("docile_skeleton", 1, (1.0f / 20.0f), 2.0f, CreateSprite(".\\TestData\\docile_skeleton_sheet.png", 6, 2));
 	mobHandler->AnimateMobUnit("docile_skeleton", { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 });
+	mobHandler->AnimateMobDeath("docile_skeleton", { 0,1,2,3,4 });
 	//---------------------------
 
 
@@ -142,32 +141,8 @@ void Init()
 void Update(float deltaTime)
 {
 	playerObject->Update(deltaTime);
-	playerWeapon->Update(deltaTime);
-
-	if (IsKeyPressed(0x46)) //If you press 'F' for fire
-	{
-		//playerSprite->SetPosition(x[15], y[15]);
-		//gameFloor = bgData->GetBorderSprite(1);
-		if (playerObject->GetPlayerFacing() == ANIM_LEFT) {
-			weaponSprite = playerWeapon->GetWeaponSprite("west");
-			playerWeapon->FireWeapon(playerObject->GetXPos(), playerObject->GetYPos(), bgData->GetMinInnerX(), playerObject->GetYPos());
-		}
-		if (playerObject->GetPlayerFacing() == ANIM_RIGHT) {
-			weaponSprite = playerWeapon->GetWeaponSprite("east");
-			playerWeapon->FireWeapon(playerObject->GetXPos(), playerObject->GetYPos(), bgData->GetMaxInnerX(), playerObject->GetYPos());
-		}
-		if (playerObject->GetPlayerFacing() == ANIM_FORWARDS) {
-			weaponSprite = playerWeapon->GetWeaponSprite("north");
-			playerWeapon->FireWeapon(playerObject->GetXPos(), playerObject->GetYPos(), playerObject->GetXPos(), bgData->GetMaxInnerY());
-		}
-		if (playerObject->GetPlayerFacing() == ANIM_BACKWARDS) {
-			weaponSprite = playerWeapon->GetWeaponSprite("south");
-			playerWeapon->FireWeapon(playerObject->GetXPos(), playerObject->GetYPos(), playerObject->GetXPos(), bgData->GetMinInnerY());
-		}
-	}
-
 	mobUnits->Update(deltaTime, playerObject->GetXPos(), playerObject->GetYPos());
-	
+
 	//------------------------------------------------------------------------
 	// Sample Sound.
 	//------------------------------------------------------------------------
@@ -210,6 +185,7 @@ void Render()
 
 	//Draw the player
 	playerSprite->Draw();
+
 
 	//------------------------------------------------------------------------
 	// Example Text.

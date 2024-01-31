@@ -12,6 +12,7 @@ public:
 
 	void AddMobSprite(string name, int health, float speed, float scale, CSimpleSprite* sprite);
 	void AnimateMobUnit(string name, const std::vector<int>& backwards, const std::vector<int>& left, const std::vector<int>& right, const std::vector<int>& forwards);
+	void AnimateMobDeath(string name, const std::vector<int>& death);
 	CSimpleSprite* GetSprite(string name);
 	int GetMobHealth(string name);
 	float GetMobSpeedList(string name);

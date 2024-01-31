@@ -9,21 +9,25 @@ using namespace App;
 class Weapon
 {
 public:
-	Weapon(BackgroundData* backData, float speed, CSimpleSprite* bullet, string direction);
-	void AddSprite(CSimpleSprite* bullet, string direction);
-	void FireWeapon(float xOrigin, float yOrigin, float xDest, float yDest, string direction);
-	void Update(float dTime, string direction);
+	Weapon(BackgroundData* backData, float speed, CSimpleSprite* bullet);
+	void FireWeapon(float xStart, float yStart, float xDest, float yDest);
+	void Update(float dTime);
 	bool isActive();
 	void Collided();
+	void Stop();
 
-	CSimpleSprite* GetWeaponSprite(string name);
+	CSimpleSprite* GetWeaponSprite();
 
-	Coord GetPosition();
+	void GetPosition(float x, float y);
+
+	float GetXPos();
+	float GetYPos();
 
 private:
 
 	BackgroundData* bgData; 
-	map < string, CSimpleSprite* > spriteDirections;
+	CSimpleSprite* weaponSprite;
+	//map < string, CSimpleSprite* > spriteDirections;
 
 	float xPos = 0;
 	float yPos = 0;

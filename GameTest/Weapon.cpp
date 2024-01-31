@@ -1,49 +1,46 @@
 #include "stdafx.h"
 #include "Weapon.h"
 
-Weapon::Weapon(BackgroundData* backData, float speed, CSimpleSprite* bullet, string direction)
+Weapon::Weapon(BackgroundData* backData, float speed, CSimpleSprite* bullet)
 {
 	bgData = backData;
 	weaponSpeed = speed;
-	spriteDirections[direction] = bullet;
+	weaponSprite = bullet;
 
 	//Boundary
 	rightBorderX = bgData->GetMaxInnerX();
 	leftBorderX = bgData->GetMinInnerX();
 	upperBorderY = bgData->GetMaxInnerY();
 	lowerBorderY = bgData->GetMinInnerY();
+	weaponSprite->SetScale(2.0);
 }
 
-void Weapon::AddSprite(CSimpleSprite* bullet, string direction)
+void Weapon::FireWeapon(float xStart, float yStart, float xDest, float yDest)
 {
-	spriteDirections[direction] = bullet;
+
+	//inAction = true;
+	xPos = xStart;
+	yPos = yStart;
+
+
+	float gradient = (xStart - xDest) / (yStart - yDest);
+
+
+	// Position the bullet ready to be drawn
+	weaponSprite->SetPosition(xPos, yPos);
+	
+
 }
 
-void Weapon::FireWeapon(float xOrigin, float yOrigin, float xDest, float yDest, string direction)
+void Weapon::Update(float dTime)
 {
-	xPos = xOrigin;
-	yPos = yOrigin;
-	inAction = true;
+	// Update the bullet position variables
 
-	if (xOrigin > xDest) {
-		weaponSpeedX = weaponSpeedX * -1;
-	}
 
-	if (yOrigin > yDest) {
-		weaponSpeedY = weaponSpeedY * -1;
-	}
-
-	spriteDirections[direction]->SetPosition(xPos, yPos);
-}
-
-void Weapon::Update(float dTime, string direction)
-{
-	spriteDirections[direction]->GetPosition(xPos, yPos);
-	spriteDirections[direction]->SetPosition(xPos + weaponSpeedX * dTime, yPos + weaponSpeedY * dTime);
-	spriteDirections[direction]->Update(dTime);
-
-	if (xPos < leftBorderX || xPos > rightBorderX || yPos < lowerBorderY || yPos > upperBorderY) {
-		inAction = false; 
+	if (xPos < leftBorderX || xPos > rightBorderX ||
+		yPos < upperBorderY || yPos > lowerBorderY)
+	{
+		inAction = false;
 	}
 }
 
@@ -52,18 +49,29 @@ bool Weapon::isActive()
 	return inAction;
 }
 
-void Weapon::Collided()
-{
+void Weapon::Stop() {
 	inAction = false;
 }
 
-CSimpleSprite* Weapon::GetWeaponSprite(string name)
+
+CSimpleSprite* Weapon::GetWeaponSprite()
 {
-	return spriteDirections[name];
+	return weaponSprite;
 }
 
-Coord Weapon::GetPosition()
+void Weapon::GetPosition(float x, float y)
 {
-	Coord pos = { xPos,yPos };
-	return Coord();
+	xPos = x;
+	yPos = y;
+	weaponSprite->SetPosition(xPos, yPos);
+}
+
+float Weapon::GetXPos()
+{
+	return xPos;
+}
+
+float Weapon::GetYPos()
+{
+	return yPos;
 }

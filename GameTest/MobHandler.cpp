@@ -17,6 +17,10 @@ void MobHandler::AnimateMobUnit(string name, const std::vector<int>& backwards, 
 	spriteList[name]->CreateAnimation(ANIM_FORWARDS, mobSpeedList[name], forwards);
 }
 
+void MobHandler::AnimateMobDeath(string name, const std::vector<int>& death) {
+	spriteList[name]->CreateAnimation(UNIT_DEATH, mobSpeedList[name], death);
+}
+
 CSimpleSprite* MobHandler::GetSprite(string name)
 {
 	return spriteList[name];
