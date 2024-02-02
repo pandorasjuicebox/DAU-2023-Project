@@ -72,9 +72,10 @@ void Init()
 	gameFloor = bgData->GetFloorSprite("normal_grass");
 
 	//Enemy Mobs ----------------
-	mobHandler->AddMobSprite("docile_skeleton", 1, (1.0f / 20.0f), 2.0f, CreateSprite(".\\TestData\\docile_skeleton_sheet.png", 6, 2));
+	mobHandler->AddMobSprite("docile_skeleton", 2, (1.0f / 20.0f), 1.5f, CreateSprite(".\\TestData\\docile_skeleton_sheet.png", 6, 2));
 	mobHandler->AnimateMobUnit("docile_skeleton", { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 });
-	mobHandler->AnimateMobDeath("docile_skeleton", { 0,1,2,3,4 });
+	mobHandler->AnimateMobDeath("docile_skeleton", { 6,7,8,9,10 });
+	//mobHandler->RemoveSprite("docile_skeleton", { 11 });
 	//---------------------------
 
 
@@ -124,8 +125,8 @@ void Init()
 	//-----------------------------
 
 	//Set up floor
-	for (int i = 3; i < columns-3; i++) {
-		for (int k = 0; k < rows-3; k++) {
+	for (int i = 3; i < columns-3; i++) { // 32 - 3 = 29
+		for (int k = 0; k < rows-3; k++) { // 25 - 3 = 22
 			bgData->AddFloorLocation(bgData->GetX(i), bgData->GetY(k));
 		}
 	}
@@ -181,10 +182,50 @@ void Render()
 		borderDecor->Draw();
 	}
 
-	mobUnits->GetUnitSprite()->Draw();
+	if (!mobUnits->isDead()) {
+		mobUnits->GetUnitSprite()->Draw();
+	}
 
 	//Draw the player
 	playerSprite->Draw();
+
+	if (IsKeyPressed(0x46)) {
+		if (playerObject->GetMovingDirection() == ANIM_RIGHT) {
+			//Facing west, moving east
+			playerSprite->SetAnimation(ANIM_ATTACK_WEST);
+		}
+		if (playerObject->GetMovingDirection() == ANIM_LEFT) {
+			//Facing east, moving west
+			playerSprite->SetAnimation(ANIM_ATTACK_EAST);
+		}
+		if (playerObject->GetMovingDirection() == ANIM_BACKWARDS) {
+			//Facing south, walking north
+			playerSprite->SetAnimation(ANIM_ATTACK_SOUTH);
+		}
+		if (playerObject->GetMovingDirection() == ANIM_FORWARDS) {
+			//Facing north, walking south
+			playerSprite->SetAnimation(ANIM_ATTACK_NORTH);
+		}
+	}
+	else {
+		if (playerObject->GetMovingDirection() == ANIM_RIGHT) {
+			//Facing west, moving east
+			playerSprite->SetAnimation(ANIM_RIGHT);
+		}
+		if (playerObject->GetMovingDirection() == ANIM_LEFT) {
+			//Facing east, moving west
+			playerSprite->SetAnimation(ANIM_LEFT);
+		}
+		if (playerObject->GetMovingDirection() == ANIM_BACKWARDS) {
+			//Facing south, walking north
+			playerSprite->SetAnimation(ANIM_BACKWARDS);
+		}
+		if (playerObject->GetMovingDirection() == ANIM_FORWARDS) {
+			//Facing north, walking south
+			playerSprite->SetAnimation(ANIM_FORWARDS);
+		}
+	}
+
 
 
 	//------------------------------------------------------------------------

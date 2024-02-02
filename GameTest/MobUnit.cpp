@@ -42,22 +42,57 @@ void MobUnit::Update(float dTime, float playerX, float playerY)
 	if (xPos < playerPositionX) {
 		unitSprite->GetPosition(xPos, yPos);
 		unitSprite->SetPosition(xPos + acceleration, yPos);
-		unitSprite->SetAnimation(ANIM_RIGHT);
+		unitSprite->SetAnimation(ANIM_RIGHT); //move right
+
+		if (unitHealth == 0) {
+			unitSprite->SetAnimation(UNIT_DEATH);
+			lifeStatus = false;
+		}
+		else if ((playerPositionX - xPos <= 1) && IsKeyPressed(0x46)) {
+				unitHealth--;
+		}
 	}
-	if (xPos > playerPositionX) {
-		unitSprite->GetPosition(xPos, yPos);
-		unitSprite->SetPosition(xPos - acceleration, yPos);
-		unitSprite->SetAnimation(ANIM_LEFT);
-	}
+
 	if (yPos < playerPositionY) {
 		unitSprite->GetPosition(xPos, yPos);
 		unitSprite->SetPosition(xPos, yPos + acceleration);
-		unitSprite->SetAnimation(ANIM_FORWARDS);
+		unitSprite->SetAnimation(ANIM_FORWARDS); //move forward
+
+		if (unitHealth == 0) {
+			unitSprite->SetAnimation(UNIT_DEATH);
+			lifeStatus = false;
+		}
+		else if ((playerPositionY - yPos <= 1) && IsKeyPressed(0x46)) {
+			unitHealth--;
+		}
 	}
+
+	if (xPos > playerPositionX) {
+		unitSprite->GetPosition(xPos, yPos);
+		unitSprite->SetPosition(xPos - acceleration, yPos);
+		unitSprite->SetAnimation(ANIM_LEFT); //move left
+
+		if (unitHealth == 0) {
+			unitSprite->SetAnimation(UNIT_DEATH);
+			lifeStatus = false;
+		}
+		else if ((xPos - playerPositionX <= 1)  && IsKeyPressed(0x46)) {
+				unitHealth--;
+		}
+	}
+
 	if (yPos > playerPositionY) {
 		unitSprite->GetPosition(xPos, yPos);
 		unitSprite->SetPosition(xPos, yPos - acceleration);
-		unitSprite->SetAnimation(ANIM_BACKWARDS);
+		unitSprite->SetAnimation(ANIM_BACKWARDS); //move backward
+		
+		if (unitHealth == 0) {
+			unitSprite->SetAnimation(UNIT_DEATH);
+			lifeStatus = false;
+		}
+		else if ((yPos - playerPositionY <= 10) &&  IsKeyPressed(0x46)) {
+			unitHealth--;
+		}
 	}
 
 }
@@ -75,13 +110,8 @@ int MobUnit::getHealth()
 
 bool MobUnit::isDead()
 {
-	bool status;
 	if (unitHealth == 0) {
-		status = true;
+		lifeStatus = true;
 	}
-	else {
-		unitHealth--;
-		status = false;
-	}
-	return status;
+	return lifeStatus;
 }

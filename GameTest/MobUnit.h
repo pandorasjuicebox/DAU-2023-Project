@@ -22,6 +22,9 @@ public:
 	int getHealth();
 	//Is it dead? If not, deduct health points only
 	bool isDead();
+	
+	void SetFacing(int direction);
+	int GetFacing();
 
 private:
 
@@ -37,5 +40,8 @@ private:
 
 	float playerXPos;
 	float playerYPos;
+	bool lifeStatus = false;
+
+	int facing;
 
 };
