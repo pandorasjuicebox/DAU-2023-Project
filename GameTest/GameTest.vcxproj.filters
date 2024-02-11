@@ -26,6 +26,7 @@
     <ClCompile Include="MobHandler.cpp" />
     <ClCompile Include="MobUnit.cpp" />
     <ClCompile Include="PlayerState.cpp" />
+    <ClCompile Include="GameObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -55,10 +56,9 @@
     </ClInclude>
     <ClInclude Include="BackgroundData.h" />
     <ClInclude Include="Definitions.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="MobHandler.h" />
-    <ClInclude Include="MobUnit.h" />
     <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="GameObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">

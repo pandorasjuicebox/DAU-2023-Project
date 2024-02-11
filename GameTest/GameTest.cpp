@@ -13,7 +13,8 @@
 #include "Definitions.h"
 #include "BackgroundData.h"
 #include "MobHandler.h"
-#include "MobUnit.h"
+#include "GameObject.h"
+#include "PlayerState.h"
 using namespace App;
 using namespace std;
 //------------------------------------------------------------------------
@@ -25,10 +26,10 @@ CSimpleSprite* gameFloor;
 CSimpleSprite* weaponSprite;
 
 Player* playerObject;
+PlayerState* playerState;
 BackgroundData* bgData;
 MobHandler* mobHandler;
 MobUnit* mobUnits;
-Weapon* playerWeapon;
 
 const int columns = 32;
 const int rows = 25;
@@ -57,6 +58,8 @@ void Init()
 	//positioned at the center
 	playerObject = new Player(CreateSprite(".\\TestData\\player_full_sheet.png", 6, 10), bgData->GetX(bgData->GetSize() / 2), bgData->GetY(bgData->GetSize() / 2));
 	playerSprite = playerObject->GetPlayerSprite();
+	
+	playerState = new PlayerState();
 
 
 	//Border Tiles --------------
@@ -143,6 +146,7 @@ void Update(float deltaTime)
 {
 	playerObject->Update(deltaTime);
 	mobUnits->Update(deltaTime, playerObject->GetXPos(), playerObject->GetYPos());
+	playerObject->checkCollision(mobUnits);
 
 	//------------------------------------------------------------------------
 	// Sample Sound.
@@ -190,37 +194,37 @@ void Render()
 	playerSprite->Draw();
 
 	if (IsKeyPressed(0x46)) {
-		if (playerObject->GetMovingDirection() == ANIM_RIGHT) {
+		if (playerObject->GetGoingDirection() == GOING_EAST) {
 			//Facing west, moving east
 			playerSprite->SetAnimation(ANIM_ATTACK_WEST);
 		}
-		if (playerObject->GetMovingDirection() == ANIM_LEFT) {
+		if (playerObject->GetGoingDirection() == GOING_WEST) {
 			//Facing east, moving west
 			playerSprite->SetAnimation(ANIM_ATTACK_EAST);
 		}
-		if (playerObject->GetMovingDirection() == ANIM_BACKWARDS) {
+		if (playerObject->GetGoingDirection() == GOING_NORTH) {
 			//Facing south, walking north
 			playerSprite->SetAnimation(ANIM_ATTACK_SOUTH);
 		}
-		if (playerObject->GetMovingDirection() == ANIM_FORWARDS) {
+		if (playerObject->GetGoingDirection() == GOING_SOUTH) {
 			//Facing north, walking south
 			playerSprite->SetAnimation(ANIM_ATTACK_NORTH);
 		}
 	}
-	else {
-		if (playerObject->GetMovingDirection() == ANIM_RIGHT) {
+	else { //Reset actions
+		if (playerObject->GetGoingDirection() == GOING_EAST) {
 			//Facing west, moving east
 			playerSprite->SetAnimation(ANIM_RIGHT);
 		}
-		if (playerObject->GetMovingDirection() == ANIM_LEFT) {
+		if (playerObject->GetGoingDirection() == GOING_WEST) {
 			//Facing east, moving west
 			playerSprite->SetAnimation(ANIM_LEFT);
 		}
-		if (playerObject->GetMovingDirection() == ANIM_BACKWARDS) {
+		if (playerObject->GetGoingDirection() == GOING_NORTH) {
 			//Facing south, walking north
 			playerSprite->SetAnimation(ANIM_BACKWARDS);
 		}
-		if (playerObject->GetMovingDirection() == ANIM_FORWARDS) {
+		if (playerObject->GetGoingDirection() == GOING_SOUTH) {
 			//Facing north, walking south
 			playerSprite->SetAnimation(ANIM_FORWARDS);
 		}

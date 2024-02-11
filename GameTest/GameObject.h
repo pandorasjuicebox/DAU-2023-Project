@@ -9,7 +9,37 @@
 using namespace std;
 using namespace App;
 
-class MobUnit {
+class GameObject {
+public: 
+	int GetHealth();
+	CSimpleSprite* GetObjectSprite();
+	void SetHealth(int deduction);
+
+protected:
+	float xPos;
+	float yPos;
+	float scale;
+	CSimpleSprite* objectSprite;
+	int health;
+	float speed;
+	bool deadStatus = false;
+};
+
+class Player: GameObject {
+public: 
+	Player(CSimpleSprite* sprite, int xCoord, int yCoord);
+	void Update(float dTime);
+	float GetXPos();
+	float GetYPos();
+
+	void SetGoing(int direction);
+	int GetGoingDirection();
+
+private:
+	int facing;
+};
+
+class MobUnit : GameObject {
 public:
 	//Constructor
 	MobUnit(MobHandler* mbHandler, BackgroundData* backData);
@@ -26,24 +56,10 @@ public:
 	void SetHealth(int deduction);
 	//Is it dead? If not, deduct health points only
 	bool isDead();
-	
-	//void SetFacing(int direction);
-	//int GetFacing();
-
-
 private:
-
 	MobHandler* mobDirectory;
 	BackgroundData* bgData;
-	int unitHealth;
 	string unitName;
-	CSimpleSprite* unitSprite;
-	float xPos;
-	float yPos;
-	float unitSpeed;
-	float unitScale;
-
 	float playerXPos;
 	float playerYPos;
-
 };
