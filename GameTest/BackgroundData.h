@@ -37,6 +37,7 @@ public:
 	Coord GetOuterBorderLocation(int i);
 	Coord GetInnerBorderLocation(int i);
 	Coord GetFloorLocation(int i);
+
 	int GetOuterBorderSize();
 	int GetInnerBorderSize();
 	int GetFloorSize();

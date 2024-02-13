@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include "app/app.h"
 #include "Definitions.h"
-#include "Player.h"
+#include "GameObject.h"
 using namespace std;
 using namespace App;
 

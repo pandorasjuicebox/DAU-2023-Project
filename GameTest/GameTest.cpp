@@ -7,13 +7,14 @@
 #include <math.h>  
 #include <vector>
 #include <string>
+#include <Windows.h>
+#include <WinUser.h>
 //------------------------------------------------------------------------
 #include "app\app.h"
-#include "Player.h"
 #include "Definitions.h"
+#include "GameObject.h"
 #include "BackgroundData.h"
 #include "MobHandler.h"
-#include "GameObject.h"
 #include "PlayerState.h"
 using namespace App;
 using namespace std;
@@ -57,7 +58,7 @@ void Init()
 	//The Player ---------------
 	//positioned at the center
 	playerObject = new Player(CreateSprite(".\\TestData\\player_full_sheet.png", 6, 10), bgData->GetX(bgData->GetSize() / 2), bgData->GetY(bgData->GetSize() / 2));
-	playerSprite = playerObject->GetPlayerSprite();
+	playerSprite = playerObject->GetObjectSprite();
 	
 	playerState = new PlayerState();
 
@@ -146,7 +147,10 @@ void Update(float deltaTime)
 {
 	playerObject->Update(deltaTime);
 	mobUnits->Update(deltaTime, playerObject->GetXPos(), playerObject->GetYPos());
-	playerObject->checkCollision(mobUnits);
+	
+	if (playerObject->intersects(mobUnits) && IsKeyPressed(0x46)) {
+		mobUnits->DeductHealth(1);
+	}
 
 	//------------------------------------------------------------------------
 	// Sample Sound.

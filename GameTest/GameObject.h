@@ -6,6 +6,9 @@
 #include "BackgroundData.h"
 #include <string>
 #include <vector>
+#include <Windows.h>
+#include <WinUser.h>
+
 using namespace std;
 using namespace App;
 
@@ -14,6 +17,11 @@ public:
 	int GetHealth();
 	CSimpleSprite* GetObjectSprite();
 	void SetHealth(int deduction);
+	void RefreshPosition();
+	float GetXPos();
+	float GetYPos();
+	bool intersects(GameObject* object);
+
 
 protected:
 	float xPos;
@@ -23,14 +31,13 @@ protected:
 	int health;
 	float speed;
 	bool deadStatus = false;
+
 };
 
-class Player: GameObject {
+class Player: public GameObject {
 public: 
 	Player(CSimpleSprite* sprite, int xCoord, int yCoord);
 	void Update(float dTime);
-	float GetXPos();
-	float GetYPos();
 
 	void SetGoing(int direction);
 	int GetGoingDirection();
@@ -39,7 +46,7 @@ private:
 	int facing;
 };
 
-class MobUnit : GameObject {
+class MobUnit : public GameObject {
 public:
 	//Constructor
 	MobUnit(MobHandler* mbHandler, BackgroundData* backData);
@@ -53,7 +60,7 @@ public:
 	//Get mob type
 	int GetType();
 	//Remove Health
-	void SetHealth(int deduction);
+	void DeductHealth(int deduction);
 	//Is it dead? If not, deduct health points only
 	bool isDead();
 private:

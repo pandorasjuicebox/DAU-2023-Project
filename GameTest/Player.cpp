@@ -25,12 +25,18 @@ Player::Player(CSimpleSprite* sprite, int xCoord, int yCoord)
 	objectSprite->SetScale(1.5f);
 	objectSprite->SetPosition(xCoord, yCoord);
 
+	SetGoing(GOING_EAST);
+
 	xPos = xCoord;
 	yPos = yCoord;
 
-	SetGoing(GOING_EAST);
+	//hitBox.left = xPos;
+	//hitBox.top = yPos;
+	//hitBox.right = xPos + objectSprite->GetWidth();
+	//hitBox.bottom = yPos + objectSprite->GetHeight();
 
 }
+
 
 void Player::Update(float dTime)
 {
@@ -153,16 +159,6 @@ void Player::Update(float dTime)
 //	return playerLives;
 //}
 
-float Player::GetXPos()
-{
-	return xPos;
-}
-
-float Player::GetYPos()
-{
-	return yPos;
-}
-
 void Player::SetGoing(int direction)
 {
 	if (direction == GOING_NORTH) {
@@ -183,6 +179,8 @@ int Player::GetGoingDirection()
 {
 	return facing;
 }
+
+
 
 	
 

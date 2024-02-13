@@ -24,6 +24,11 @@ void MobUnit::AddMobUnit(string name)
 
 	objectSprite->SetPosition(xPos, yPos);
 	objectSprite->SetScale(scale);
+
+//	hitBox.left = xPos;
+//	hitBox.top = yPos;
+//	hitBox.right = xPos + objectSprite->GetWidth();
+//	hitBox.bottom = yPos + objectSprite->GetHeight();
 }
 
 CSimpleSprite* MobUnit::GetUnitSprite()
@@ -38,33 +43,21 @@ void MobUnit::Update(float dTime, float playerX, float playerY)
 	float acceleration = speed * dTime;
 	objectSprite->Update(dTime);
 
+	if (health == 0) {
+		objectSprite->SetAnimation(UNIT_DEATH);
+	}
+
 
 	if (xPos < playerPositionX) {
 		objectSprite->GetPosition(xPos, yPos);
 		objectSprite->SetPosition(xPos + acceleration, yPos);
 		objectSprite->SetAnimation(ANIM_RIGHT); //move right
-
-		if (health == 0) {
-			objectSprite->SetAnimation(UNIT_DEATH);
-			deadStatus = false;
-		}
-		//else if ((playerPositionX - xPos <= 1) && IsKeyPressed(0x46)) {
-		//		unitHealth--;
-		//}
 	}
 
 	if (yPos < playerPositionY) {
 		objectSprite->GetPosition(xPos, yPos);
 		objectSprite->SetPosition(xPos, yPos + acceleration);
 		objectSprite->SetAnimation(ANIM_FORWARDS); //move forward
-
-		//if (unitHealth == 0) {
-		//	unitSprite->SetAnimation(UNIT_DEATH);
-		//	lifeStatus = false;
-		//}
-		//else if ((playerPositionY - yPos <= 1) && IsKeyPressed(0x46)) {
-		//	unitHealth--;
-		//}
 	}
 
 	if (xPos > playerPositionX) {
@@ -72,27 +65,13 @@ void MobUnit::Update(float dTime, float playerX, float playerY)
 		objectSprite->SetPosition(xPos - acceleration, yPos);
 		objectSprite->SetAnimation(ANIM_LEFT); //move left
 
-		//if (unitHealth == 0) {
-		//	unitSprite->SetAnimation(UNIT_DEATH);
-		//	lifeStatus = false;
-		//}
-		//else if ((xPos - playerPositionX <= 1)  && IsKeyPressed(0x46)) {
-		//		unitHealth--;
-		//}
 	}
 
 	if (yPos > playerPositionY) {
 		objectSprite->GetPosition(xPos, yPos);
 		objectSprite->SetPosition(xPos, yPos - acceleration);
 		objectSprite->SetAnimation(ANIM_BACKWARDS); //move backward
-		
-		//if (unitHealth == 0) {
-		//	unitSprite->SetAnimation(UNIT_DEATH);
-		//	lifeStatus = false;
-		//}
-		//else if ((yPos - playerPositionY <= 10) &&  IsKeyPressed(0x46)) {
-		//	unitHealth--;
-		//}
+
 	}
 
 }
@@ -113,7 +92,7 @@ int MobUnit::GetType()
 	return MOB_UNIT;
 }
 
-void MobUnit::SetHealth(int deduction)
+void MobUnit::DeductHealth(int deduction)
 {
 	health = health - deduction;
 }
