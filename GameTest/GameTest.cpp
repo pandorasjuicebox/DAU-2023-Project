@@ -9,6 +9,7 @@
 #include <string>
 #include <Windows.h>
 #include <WinUser.h>
+#include <ctime>
 //------------------------------------------------------------------------
 #include "app\app.h"
 #include "Definitions.h"
@@ -18,8 +19,8 @@
 #include "PlayerState.h"
 using namespace App;
 using namespace std;
-//------------------------------------------------------------------------
 
+//------------------------------------------------------------------------
 CSimpleSprite* playerSprite;
 CSimpleSprite* tileWall;
 CSimpleSprite* borderDecor;
@@ -30,7 +31,10 @@ Player* playerObject;
 PlayerState* playerState;
 BackgroundData* bgData;
 MobHandler* mobHandler;
+
 MobUnit* mobUnits;
+
+vector<MobUnit*>units;
 
 const int columns = 32;
 const int rows = 25;
@@ -40,6 +44,7 @@ const int rows = 25;
 //------------------------------------------------------------------------
 void Init()
 {
+	srand(time(0));
 	bgData = new BackgroundData();
 	mobHandler = new MobHandler();
 	mobUnits = new MobUnit(mobHandler, bgData);
@@ -57,7 +62,7 @@ void Init()
 
 	//The Player ---------------
 	//positioned at the center
-	playerObject = new Player(CreateSprite(".\\TestData\\player_full_sheet.png", 6, 10), bgData->GetX(bgData->GetSize() / 2), bgData->GetY(bgData->GetSize() / 2));
+	playerObject = new Player(CreateSprite(".\\TestData\\player_full_sheet.png", 6, 10), bgData->GetX(bgData->GetSize() / 2), bgData->GetY(bgData->GetSize() / 2), bgData);
 	playerSprite = playerObject->GetObjectSprite();
 	
 	playerState = new PlayerState();
@@ -135,8 +140,22 @@ void Init()
 		}
 	}
 
+	//Set up playable game floor
+	for (int i = 4; i < columns - 4; i++) { // 32 - 3 = 29
+		for (int k = 5; k < rows - 4; k++) { // 25 - 3 = 22
+			playerObject->AddPlayerAreaCoord(bgData->GetX(i), bgData->GetY(k));
+		}
+	}
+
 	bgData->CreateBorders();
-	mobUnits->AddMobUnit("docile_skeleton");
+	playerObject->CreateBorders();
+	mobUnits->SetMobUnit("docile_skeleton");
+
+	for (int i = 0; i < 10; i++) {
+		srand(time(0));
+		units.push_back(new MobUnit(mobHandler, bgData));
+		units.at(i)->SetMobUnit("docile_skeleton");
+	}
 }
 
 //------------------------------------------------------------------------
@@ -146,11 +165,22 @@ void Init()
 void Update(float deltaTime)
 {
 	playerObject->Update(deltaTime);
-	mobUnits->Update(deltaTime, playerObject->GetXPos(), playerObject->GetYPos());
-	
-	if (playerObject->intersects(mobUnits) && IsKeyPressed(0x46)) {
-		mobUnits->DeductHealth(1);
-	}
+	//mobUnits->Update(deltaTime, playerObject->GetXPos(), playerObject->GetYPos());
+
+	//if (playerObject->intersects(mobUnits) && IsKeyPressed(0x46)) {
+	//	mobUnits->DeductHealth(1);
+	//}
+
+	//for (int i = 0; i < 10; i++) {
+	//	units.at(i)->Update(deltaTime, playerObject->GetXPos(), playerObject->GetYPos());
+	//	
+	//	if (playerObject->intersects(units.at(i)) && IsKeyPressed(0x46)) {
+	//			units.at(i)->DeductHealth(1);
+	//	}
+	//}
+
+	//Write the Update(deltaTime) code for the mobs, and put the loop in that class
+	//Make a level class which handles the mobs
 
 	//------------------------------------------------------------------------
 	// Sample Sound.
@@ -190,8 +220,14 @@ void Render()
 		borderDecor->Draw();
 	}
 
-	if (!mobUnits->isDead()) {
-		mobUnits->GetUnitSprite()->Draw();
+	//if (!mobUnits->isDead()) {
+	//	mobUnits->GetUnitSprite()->Draw();
+	//}
+
+	for (int i = 0; i < 10; i++) {
+		if (!units.at(i)->isDead()) {
+			units.at(i)->GetUnitSprite()->Draw();
+		}
 	}
 
 	//Draw the player

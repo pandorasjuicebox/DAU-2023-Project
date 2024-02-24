@@ -37,9 +37,20 @@ vector<Coord> BackgroundData::GetSpawnPoints()
 	return spawnPoints;
 }
 
+vector<Coord> BackgroundData::GetInnerBorderList()
+{
+	return innerBorderFrame;
+}
+
+vector<Coord> BackgroundData::GetOuterBorderList()
+{
+	return outerBorderFrame;
+}
+
 Coord BackgroundData::GetSpawnLocation()
 {
-	return spawnPoints.at(rand() % 4);
+	int location = rand() % 4;
+	return spawnPoints.at(location);
 }
 
 float BackgroundData::MaxXValue(vector<Coord> list)

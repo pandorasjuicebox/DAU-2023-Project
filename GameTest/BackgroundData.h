@@ -47,9 +47,16 @@ public:
 	float GetMaxInnerY();
 	float GetMinInnerY();
 
+	float MaxXValue(vector<Coord>list);
+	float MinXValue(vector<Coord>list);
+	float MaxYValue(vector<Coord>list);
+	float MinYValue(vector<Coord>list);
+
 	int GetSize();
 
 	vector<Coord> GetSpawnPoints();
+	vector<Coord> GetInnerBorderList();
+	vector<Coord> GetOuterBorderList();
 	Coord GetSpawnLocation();
 
 private:
@@ -84,11 +91,6 @@ private:
 	// Set up coordination system that goes by multiples of 32
 	// This is what the Tiles will use to position themselves across the game area
 	float startValue = 32;
-
-	float MaxXValue(vector<Coord>list);
-	float MinXValue(vector<Coord>list);
-	float MaxYValue(vector<Coord>list);
-	float MinYValue(vector<Coord>list);
 	void CreateCardinalPoints();
 
 };

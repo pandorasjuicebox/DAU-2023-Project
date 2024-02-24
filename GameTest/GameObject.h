@@ -31,26 +31,37 @@ protected:
 	int health;
 	float speed;
 	bool deadStatus = false;
+	BackgroundData* bgData;
+
+	float minXBorder;
+	float minYBorder;
+	float maxXBorder;
+	float maxYBorder;
 
 };
 
 class Player: public GameObject {
 public: 
-	Player(CSimpleSprite* sprite, int xCoord, int yCoord);
+	Player(CSimpleSprite* sprite, int xCoord, int yCoord, BackgroundData* backData);
 	void Update(float dTime);
 
 	void SetGoing(int direction);
 	int GetGoingDirection();
+	void AddPlayerAreaCoord(float x, float y);
+
+	void CreateBorders();
 
 private:
 	int facing;
+	vector<Coord>playerArea;
+	bool CheckBoundaries(float x, float y);
 };
 
 class MobUnit : public GameObject {
 public:
 	//Constructor
 	MobUnit(MobHandler* mbHandler, BackgroundData* backData);
-	void AddMobUnit(string name);
+	void SetMobUnit(string name);
 	CSimpleSprite* GetUnitSprite();
 	void Update(float dTime, float playerX, float playerY);
 	//Store the location of the player
@@ -65,7 +76,6 @@ public:
 	bool isDead();
 private:
 	MobHandler* mobDirectory;
-	BackgroundData* bgData;
 	string unitName;
 	float playerXPos;
 	float playerYPos;

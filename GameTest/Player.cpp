@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GameObject.h"
 
-Player::Player(CSimpleSprite* sprite, int xCoord, int yCoord)
+Player::Player(CSimpleSprite* sprite, int xCoord, int yCoord, BackgroundData* backData)
 {
 	speed = 1.0f / 15.0f;
 	objectSprite = sprite;
@@ -50,7 +50,18 @@ void Player::Update(float dTime)
 		objectSprite->SetAnimation(ANIM_RIGHT);
 		//movingDirection = ANIM_RIGHT;
 		objectSprite->GetPosition(xPos, yPos);
-		xPos += 1.0f;
+
+		if (!CheckBoundaries(xPos, yPos)) {
+			xPos += 1.0f;
+		}
+		else if (CheckBoundaries(xPos, yPos)) {
+			xPos -= 2.0f;
+		}
+		//else if (CheckBoundaries(xPos, yPos) || IsKeyPressed(App::GetController().GetLeftThumbStickX())) {
+		//	xPos += 1.0f;
+		//}
+		
+		//xPos += 1.0f;
 		objectSprite->SetPosition(xPos, yPos);
 
 		//if (IsKeyPressed(0x46)) {
@@ -67,7 +78,15 @@ void Player::Update(float dTime)
 		objectSprite->SetAnimation(ANIM_LEFT);
 		//movingDirection = ANIM_LEFT;
 		objectSprite->GetPosition(xPos, yPos);
-		xPos -= 1.0f;
+
+		if (!CheckBoundaries(xPos, yPos)) {
+			xPos -= 1.0f;
+		}
+		else if (CheckBoundaries(xPos, yPos)) {
+			xPos += 2.0f;
+		}
+
+		//xPos -= 1.0f;
 		objectSprite->SetPosition(xPos, yPos);
 
 		//if (IsKeyPressed(0x46)) {
@@ -84,7 +103,15 @@ void Player::Update(float dTime)
 		objectSprite->SetAnimation(ANIM_BACKWARDS);
 		//movingDirection = ANIM_BACKWARDS;
 		objectSprite->GetPosition(xPos, yPos);
-		yPos += 1.0f;
+
+		if (!CheckBoundaries(xPos, yPos)) {
+			yPos += 1.0f;
+		}
+		else if (CheckBoundaries(xPos, yPos)) {
+			yPos -= 2.0f;
+		}
+
+		//yPos += 1.0f;
 		objectSprite->SetPosition(xPos, yPos);
 
 		//if (IsKeyPressed(0x46)) {
@@ -101,7 +128,15 @@ void Player::Update(float dTime)
 		objectSprite->SetAnimation(ANIM_FORWARDS);
 		//movingDirection = ANIM_FORWARDS;
 		objectSprite->GetPosition(xPos, yPos);
-		yPos -= 1.0f;
+
+		if (!CheckBoundaries(xPos, yPos)) {
+			yPos -= 1.0f;
+		}
+		else if (CheckBoundaries(xPos, yPos)) {
+			yPos += 2.0f;
+		}
+		
+		//yPos -= 1.0f;
 		objectSprite->SetPosition(xPos, yPos);
 
 		//if (IsKeyPressed(0x46)) {
@@ -178,6 +213,42 @@ void Player::SetGoing(int direction)
 int Player::GetGoingDirection()
 {
 	return facing;
+}
+
+void Player::AddPlayerAreaCoord(float x, float y)
+{
+	Coord coordinates = { x,y };
+	playerArea.push_back(coordinates);
+}
+
+void Player::CreateBorders()
+{
+	minXBorder = bgData->MinXValue(playerArea);
+	minYBorder = bgData->MinYValue(playerArea);
+	maxXBorder = bgData->MaxXValue(playerArea);
+	maxYBorder = bgData->MaxYValue(playerArea);
+}
+
+bool Player::CheckBoundaries(float x, float y)
+{
+
+	//north
+	if (y > maxYBorder) {
+		return true;
+	}
+	//south
+	if (y < minYBorder) {
+		return true;
+	}
+	//west
+	if (x < minXBorder) {
+		return true;
+	}
+	//east
+	if (x > maxXBorder) {
+		return true;
+	}
+	return false;
 }
 
 

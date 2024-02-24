@@ -10,7 +10,7 @@ MobUnit::MobUnit(MobHandler* mbHandler, BackgroundData* backData)
 	bgData = backData;
 }
 
-void MobUnit::AddMobUnit(string name)
+void MobUnit::SetMobUnit(string name)
 {
 	Coord spawnPoint = bgData->GetSpawnLocation();
 
