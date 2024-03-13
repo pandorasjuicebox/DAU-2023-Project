@@ -149,12 +149,12 @@ void Init()
 
 	bgData->CreateBorders();
 	playerObject->CreateBorders();
-	mobUnits->SetMobUnit("docile_skeleton");
+	//mobUnits->SetMobUnit("docile_skeleton");
 
 	for (int i = 0; i < 10; i++) {
 		srand(time(0));
 		units.push_back(new MobUnit(mobHandler, bgData));
-		units.at(i)->SetMobUnit("docile_skeleton");
+		units.at(i)->SetMobUnit("docile_skeleton", NORTH);
 	}
 }
 
@@ -165,6 +165,7 @@ void Init()
 void Update(float deltaTime)
 {
 	playerObject->Update(deltaTime);
+
 	//mobUnits->Update(deltaTime, playerObject->GetXPos(), playerObject->GetYPos());
 
 	//if (playerObject->intersects(mobUnits) && IsKeyPressed(0x46)) {

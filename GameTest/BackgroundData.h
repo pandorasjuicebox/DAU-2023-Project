@@ -53,11 +53,9 @@ public:
 	float MinYValue(vector<Coord>list);
 
 	int GetSize();
-
-	vector<Coord> GetSpawnPoints();
 	vector<Coord> GetInnerBorderList();
 	vector<Coord> GetOuterBorderList();
-	Coord GetSpawnLocation();
+	Coord GetSpawnLocation(int direction);
 
 private:
 	//Stores x and y coord
@@ -68,7 +66,9 @@ private:
 	vector<Coord>innerBorderFrame; 
 	vector<Coord>floorArea;
 
-	vector<Coord>spawnPoints;
+	//vector<Coord>spawnPoints;
+
+	map< int, Coord> spawnPoints;
 
 	//Stores decor, border, and floor sprites as key-value pairs
 	//Used by the AddDecorSprite, AddBorderSprite, and AddFloorSprite methods

@@ -32,11 +32,6 @@ int BackgroundData::GetSize() {
 	return coordinates.size();
 }
 
-vector<Coord> BackgroundData::GetSpawnPoints()
-{
-	return spawnPoints;
-}
-
 vector<Coord> BackgroundData::GetInnerBorderList()
 {
 	return innerBorderFrame;
@@ -47,10 +42,9 @@ vector<Coord> BackgroundData::GetOuterBorderList()
 	return outerBorderFrame;
 }
 
-Coord BackgroundData::GetSpawnLocation()
+Coord BackgroundData::GetSpawnLocation(int direction)
 {
-	int location = rand() % 4;
-	return spawnPoints.at(location);
+	return spawnPoints[direction];
 }
 
 float BackgroundData::MaxXValue(vector<Coord> list)
@@ -149,14 +143,17 @@ void BackgroundData::CreateBorders()
 
 void BackgroundData::CreateCardinalPoints()
 {
-	//North at 0
-	spawnPoints.push_back({(xRightOuterBorder / 2),yUpperOuterBorder});
-	//South at 1
-	spawnPoints.push_back({(xRightOuterBorder/2), yLowerOuterBorder});
-	//East at 2
-	spawnPoints.push_back({xRightOuterBorder,(yUpperOuterBorder / 2)});
-	//West at 3
-	spawnPoints.push_back({ xLeftOuterBorder, (yUpperOuterBorder / 2) });
+	//North
+	spawnPoints[NORTH] = { (xRightOuterBorder / 2),yUpperOuterBorder - 100 };
+
+	//South
+	spawnPoints[SOUTH] = { (xRightOuterBorder / 2), yLowerOuterBorder };
+
+	//East 
+	spawnPoints[EAST] = { xRightOuterBorder,(yUpperOuterBorder / 2) };
+
+	//West
+	spawnPoints[WEST] = { xLeftOuterBorder, (yUpperOuterBorder / 2) };
 }
 
 void BackgroundData::AddOuterBorderLocation(float x, float y)

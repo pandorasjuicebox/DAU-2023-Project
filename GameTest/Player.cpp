@@ -54,7 +54,7 @@ void Player::Update(float dTime)
 		if (!CheckBoundaries(xPos, yPos)) {
 			xPos += 1.0f;
 		}
-		else if (CheckBoundaries(xPos, yPos)) {
+		if (CheckBoundaries(xPos, yPos)) {
 			xPos -= 2.0f;
 		}
 		//else if (CheckBoundaries(xPos, yPos) || IsKeyPressed(App::GetController().GetLeftThumbStickX())) {
@@ -82,7 +82,7 @@ void Player::Update(float dTime)
 		if (!CheckBoundaries(xPos, yPos)) {
 			xPos -= 1.0f;
 		}
-		else if (CheckBoundaries(xPos, yPos)) {
+		if (CheckBoundaries(xPos, yPos)) {
 			xPos += 2.0f;
 		}
 
@@ -107,7 +107,7 @@ void Player::Update(float dTime)
 		if (!CheckBoundaries(xPos, yPos)) {
 			yPos += 1.0f;
 		}
-		else if (CheckBoundaries(xPos, yPos)) {
+		if (CheckBoundaries(xPos, yPos)) {
 			yPos -= 2.0f;
 		}
 
@@ -132,7 +132,7 @@ void Player::Update(float dTime)
 		if (!CheckBoundaries(xPos, yPos)) {
 			yPos -= 1.0f;
 		}
-		else if (CheckBoundaries(xPos, yPos)) {
+		if (CheckBoundaries(xPos, yPos)) {
 			yPos += 2.0f;
 		}
 		
@@ -237,15 +237,15 @@ bool Player::CheckBoundaries(float x, float y)
 		return true;
 	}
 	//south
-	if (y < minYBorder) {
+	else if (y < minYBorder) {
 		return true;
 	}
 	//west
-	if (x < minXBorder) {
+	else if (x < minXBorder) {
 		return true;
 	}
 	//east
-	if (x > maxXBorder) {
+	else if (x > maxXBorder) {
 		return true;
 	}
 	return false;

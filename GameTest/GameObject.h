@@ -61,7 +61,7 @@ class MobUnit : public GameObject {
 public:
 	//Constructor
 	MobUnit(MobHandler* mbHandler, BackgroundData* backData);
-	void SetMobUnit(string name);
+	void SetMobUnit(string name, int direction);
 	CSimpleSprite* GetUnitSprite();
 	void Update(float dTime, float playerX, float playerY);
 	//Store the location of the player
@@ -74,6 +74,7 @@ public:
 	void DeductHealth(int deduction);
 	//Is it dead? If not, deduct health points only
 	bool isDead();
+
 private:
 	MobHandler* mobDirectory;
 	string unitName;

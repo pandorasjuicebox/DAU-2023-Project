@@ -41,3 +41,4 @@ float MobHandler::GetMobScale(string name)
 	return mobScale[name];
 }
 
+
