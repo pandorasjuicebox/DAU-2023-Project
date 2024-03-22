@@ -57,4 +57,14 @@ bool GameObject::intersects(GameObject* object)
     return false;
 }
 
+void GameObject::SetXPos(float x)
+{
+    xPos = x;
+}
+
+void GameObject::SetYPos(float y)
+{
+    yPos = y;
+}
+
 

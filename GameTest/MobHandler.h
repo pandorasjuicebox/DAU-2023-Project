@@ -8,6 +8,7 @@ using namespace std;
 using namespace App;
 
 class MobHandler {
+
 public:
 
 	void AddMobSprite(string name, int health, float speed, float scale, CSimpleSprite* sprite);

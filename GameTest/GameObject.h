@@ -21,18 +21,19 @@ public:
 	float GetXPos();
 	float GetYPos();
 	bool intersects(GameObject* object);
+	void SetXPos(float x);
+	void SetYPos(float y);
 
 
 protected:
 	float xPos;
 	float yPos;
-	float scale;
 	CSimpleSprite* objectSprite;
 	int health;
 	float speed;
+	float scale;
 	bool deadStatus = false;
-	BackgroundData* bgData;
-
+	//BackgroundData* bgData;
 	float minXBorder;
 	float minYBorder;
 	float maxXBorder;
@@ -55,15 +56,17 @@ private:
 	int facing;
 	vector<Coord>playerArea;
 	bool CheckBoundaries(float x, float y);
+	BackgroundData* bgData;
 };
 
 class MobUnit : public GameObject {
 public:
 	//Constructor
-	MobUnit(MobHandler* mbHandler, BackgroundData* backData);
-	void SetMobUnit(string name, int direction);
-	CSimpleSprite* GetUnitSprite();
+	MobUnit(CSimpleSprite* sprite, int healthPoints, float x, float y, float mobScale, float mobSpeed);
+	//CSimpleSprite* GetUnitSprite();
 	void Update(float dTime, float playerX, float playerY);
+	void AnimateMobUnit(const std::vector<int>& backwards, const std::vector<int>& left, const std::vector<int>& right, const std::vector<int>& forwards);
+	void AnimateMobDeath(const std::vector<int>& death);
 	//Store the location of the player
 	void SetPlayerLocation(float xCoord, float yCoord);
 	//Get the health of the unit
@@ -76,7 +79,6 @@ public:
 	bool isDead();
 
 private:
-	MobHandler* mobDirectory;
 	string unitName;
 	float playerXPos;
 	float playerYPos;

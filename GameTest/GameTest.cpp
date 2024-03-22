@@ -32,9 +32,9 @@ PlayerState* playerState;
 BackgroundData* bgData;
 MobHandler* mobHandler;
 
-MobUnit* mobUnits;
-
 vector<MobUnit*>units;
+
+int directionList[4] = { NORTH, SOUTH, WEST, EAST };
 
 const int columns = 32;
 const int rows = 25;
@@ -47,7 +47,7 @@ void Init()
 	srand(time(0));
 	bgData = new BackgroundData();
 	mobHandler = new MobHandler();
-	mobUnits = new MobUnit(mobHandler, bgData);
+	
 
 	float lowerInnerXOffset = 25;
 	float lowerInnerYOffset = 20;
@@ -81,9 +81,9 @@ void Init()
 	gameFloor = bgData->GetFloorSprite("normal_grass");
 
 	//Enemy Mobs ----------------
-	mobHandler->AddMobSprite("docile_skeleton", 2, (1.0f / 20.0f), 1.5f, CreateSprite(".\\TestData\\docile_skeleton_sheet.png", 6, 2));
-	mobHandler->AnimateMobUnit("docile_skeleton", { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 });
-	mobHandler->AnimateMobDeath("docile_skeleton", { 6,7,8,9,10 });
+	//mobHandler->AddMobSprite("docile_skeleton", 2, (1.0f / 20.0f), 1.5f, CreateSprite(".\\TestData\\docile_skeleton_sheet.png", 6, 2));
+	//mobHandler->AnimateMobUnit("docile_skeleton", { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 });
+	//mobHandler->AnimateMobDeath("docile_skeleton", { 6,7,8,9,10 });
 	//mobHandler->RemoveSprite("docile_skeleton", { 11 });
 	//---------------------------
 
@@ -149,13 +149,57 @@ void Init()
 
 	bgData->CreateBorders();
 	playerObject->CreateBorders();
+	//mobUnits = new MobUnit(mobHandler, bgData);
+
+	//skeletonMobs = new MobUnitHandler(mobHandler, bgData, "docile_skeleton", 10);
 	//mobUnits->SetMobUnit("docile_skeleton");
 
+	int counter = 0;
 	for (int i = 0; i < 10; i++) {
-		srand(time(0));
-		units.push_back(new MobUnit(mobHandler, bgData));
-		units.at(i)->SetMobUnit("docile_skeleton", NORTH);
+
+		Coord dir; 
+
+		float xVal;
+		float yVal;
+
+		if (counter == 0) {
+			dir = bgData->GetSpawnLocation(NORTH);
+			xVal = dir.x;
+			yVal = dir.y;
+		}
+		else if (counter == 1) {
+			dir = bgData->GetSpawnLocation(SOUTH);
+			xVal = dir.x;
+			yVal = dir.y;
+		}
+		else if (counter == 2) {
+			dir = bgData->GetSpawnLocation(EAST);
+			xVal = dir.x;
+			yVal = dir.y;
+		}
+		else if (counter == 3) {
+			dir = bgData->GetSpawnLocation(WEST);
+			xVal = dir.x;
+			yVal = dir.y;
+		}
+
+		if (counter < 4) {
+			counter++;
+		}
+
+		if (counter == 4) {
+			counter = 0;
+		}
+
+		MobUnit* mob = new MobUnit(CreateSprite(".\\TestData\\docile_skeleton_sheet.png", 6, 2),2,xVal,yVal, 1.5f, (1.0f / 20.0f));
+		mob->AnimateMobUnit({ 0,1,2,3,4,5 }, { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 }, { 0,1,2,3,4,5 });
+		mob->AnimateMobDeath({ 6,7,8,9,10 });
+
+		units.push_back(mob);
 	}
+
+	//----------------------------
+
 }
 
 //------------------------------------------------------------------------
@@ -166,19 +210,24 @@ void Update(float deltaTime)
 {
 	playerObject->Update(deltaTime);
 
+	//mobUnit1->Update(deltaTime, playerObject->GetXPos(), playerObject->GetYPos());
+	//mobUnit2->Update(deltaTime, playerObject->GetXPos(), playerObject->GetYPos());
+	
+	//skeletonMobs->Update(deltaTime/2, playerObject->GetXPos(), playerObject->GetYPos());
+
 	//mobUnits->Update(deltaTime, playerObject->GetXPos(), playerObject->GetYPos());
 
 	//if (playerObject->intersects(mobUnits) && IsKeyPressed(0x46)) {
 	//	mobUnits->DeductHealth(1);
 	//}
 
-	//for (int i = 0; i < 10; i++) {
-	//	units.at(i)->Update(deltaTime, playerObject->GetXPos(), playerObject->GetYPos());
-	//	
-	//	if (playerObject->intersects(units.at(i)) && IsKeyPressed(0x46)) {
-	//			units.at(i)->DeductHealth(1);
-	//	}
-	//}
+	for (int i = 0; i < 10; i++) {
+		units.at(i)->Update(deltaTime/2, playerObject->GetXPos(), playerObject->GetYPos());
+		
+		if (playerObject->intersects(units.at(i)) && IsKeyPressed(0x46)) {
+				units.at(i)->DeductHealth(1);
+		}
+	}
 
 	//Write the Update(deltaTime) code for the mobs, and put the loop in that class
 	//Make a level class which handles the mobs
@@ -221,15 +270,54 @@ void Render()
 		borderDecor->Draw();
 	}
 
-	//if (!mobUnits->isDead()) {
-	//	mobUnits->GetUnitSprite()->Draw();
-	//}
 
 	for (int i = 0; i < 10; i++) {
+	//	Coord dir; 
+
+	//	float xVal;
+	//	float yVal;
+
+	//	if (counter == 0) {
+	//		dir = bgData->GetSpawnLocation(NORTH);
+	//		xVal = dir.x;
+	//		yVal = dir.y;
+	//	}
+	//	else if (counter == 1) {
+	//		dir = bgData->GetSpawnLocation(SOUTH);
+	//		xVal = dir.x;
+	//		yVal = dir.y;
+	//	}
+	//	else if (counter == 2) {
+	//		dir = bgData->GetSpawnLocation(EAST);
+	//		xVal = dir.x;
+	//		yVal = dir.y;
+	//	}
+	//	else if (counter == 3) {
+	//		dir = bgData->GetSpawnLocation(WEST);
+	//		xVal = dir.x;
+	//		yVal = dir.y;
+	//	}
+
+	//	if (counter < 4) {
+	//		counter++;
+	//	}
+
+	//	if (counter == 4) {
+	//		counter = 0;
+	//	}
+
 		if (!units.at(i)->isDead()) {
-			units.at(i)->GetUnitSprite()->Draw();
+			units.at(i)->GetObjectSprite()->Draw();
 		}
+
 	}
+
+	//skeletonMobs->GetMobUnitAtIndex(0)->GetObjectSprite()->Draw();
+	//skeletonMobs->GetMobUnitAtIndex(1)->GetObjectSprite()->Draw();
+	//skeletonMobs->GetMobUnitAtIndex(2)->GetObjectSprite()->Draw();
+
+	//mobUnit1->GetObjectSprite()->Draw();
+	//mobUnit2->GetObjectSprite()->Draw();
 
 	//Draw the player
 	playerSprite->Draw();

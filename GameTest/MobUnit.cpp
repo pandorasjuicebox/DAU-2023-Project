@@ -1,39 +1,19 @@
 #include "stdafx.h"
 #include "GameObject.h"
 
-MobUnit::MobUnit(MobHandler* mbHandler, BackgroundData* backData) 
+MobUnit::MobUnit(CSimpleSprite* sprite, int healthPoints, float x, float y, float mobScale, float mobSpeed)
 {
-	playerXPos = 0;
-	playerYPos = 0;
+	
+	objectSprite = sprite;
+	health = healthPoints;
+	xPos = x;
+	yPos = y;
+	scale = mobScale;
+	speed = mobSpeed;
 
-	mobDirectory = mbHandler;
-	bgData = backData;
-}
-
-void MobUnit::SetMobUnit(string name, int direction)
-{
-	Coord spawnPoint = bgData->GetSpawnLocation(direction);
-
-	unitName = name;
-	health = mobDirectory->GetMobHealth(name);
-	objectSprite = mobDirectory->GetSprite(name);
-	xPos = spawnPoint.x;
-	yPos = spawnPoint.y;
-	speed = mobDirectory->GetMobSpeedList(name);
-	scale = mobDirectory->GetMobScale(name);
-
-	objectSprite->SetPosition(xPos, yPos);
 	objectSprite->SetScale(scale);
+	objectSprite->SetPosition(xPos, yPos);
 
-//	hitBox.left = xPos;
-//	hitBox.top = yPos;
-//	hitBox.right = xPos + objectSprite->GetWidth();
-//	hitBox.bottom = yPos + objectSprite->GetHeight();
-}
-
-CSimpleSprite* MobUnit::GetUnitSprite()
-{
-	return objectSprite;
 }
 
 void MobUnit::Update(float dTime, float playerX, float playerY)
@@ -74,6 +54,18 @@ void MobUnit::Update(float dTime, float playerX, float playerY)
 
 	}
 
+}
+
+void MobUnit::AnimateMobUnit(const std::vector<int>& backwards, const std::vector<int>& left, const std::vector<int>& right, const std::vector<int>& forwards)
+{
+	objectSprite->CreateAnimation(ANIM_BACKWARDS, speed, backwards);
+	objectSprite->CreateAnimation(ANIM_LEFT, speed, left);
+	objectSprite->CreateAnimation(ANIM_RIGHT, speed, right);
+	objectSprite->CreateAnimation(ANIM_FORWARDS, speed, forwards);
+}
+
+void MobUnit::AnimateMobDeath(const std::vector<int>& death) {
+	objectSprite->CreateAnimation(UNIT_DEATH, speed, death);
 }
 
 void MobUnit::SetPlayerLocation(float xCoord, float yCoord)
