@@ -42,14 +42,18 @@ bool GameObject::intersects(GameObject* object)
     float xValue = 0;
 
 
-    yValue = yPos - object->GetYPos();
-    xValue = xPos - object->GetXPos();
+    yValue = object->GetYPos();
+    xValue = object->GetXPos();
 
-    if (yValue >= 0 && yValue <= objectSprite->GetWidth() && xValue >= 0 && xValue <= objectSprite->GetWidth()) {
+    /*if (yValue >= 0 && yValue <= objectSprite->GetWidth() && xValue >= 0 && xValue <= objectSprite->GetWidth()) {
         return true;
     }
     
     if (xValue <= 0 && xValue + objectSprite->GetWidth() >= xValue) {
+        return true;
+    }*/
+
+    if (abs(yPos - yValue) <= abs(objectSprite->GetHeight()) && abs(xPos - xValue) <= abs(objectSprite->GetWidth())) {
         return true;
     }
 

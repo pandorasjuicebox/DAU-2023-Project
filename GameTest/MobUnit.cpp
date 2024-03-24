@@ -11,6 +11,9 @@ MobUnit::MobUnit(CSimpleSprite* sprite, int healthPoints, float x, float y, floa
 	scale = mobScale;
 	speed = mobSpeed;
 
+	playerXPos = 0;
+	playerYPos = 0;
+
 	objectSprite->SetScale(scale);
 	objectSprite->SetPosition(xPos, yPos);
 
@@ -89,7 +92,17 @@ void MobUnit::DeductHealth(int deduction)
 	health = health - deduction;
 }
 
-bool MobUnit::isDead()
+void MobUnit::MarkDead()
+{
+	markedDead = true;
+}
+
+bool MobUnit::IsMarkedDead()
+{
+	return markedDead;
+}
+
+bool MobUnit::IsDead()
 {
 	if (health <= 0) {
 		deadStatus = true;

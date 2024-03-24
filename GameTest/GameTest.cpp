@@ -39,6 +39,10 @@ int directionList[4] = { NORTH, SOUTH, WEST, EAST };
 const int columns = 32;
 const int rows = 25;
 
+int scoreCounter = 0;
+
+string scoreText = "Current Score: ";
+
 //------------------------------------------------------------------------
 // Called before first update. Do any initial setup here.
 //------------------------------------------------------------------------
@@ -155,7 +159,8 @@ void Init()
 	//mobUnits->SetMobUnit("docile_skeleton");
 
 	int counter = 0;
-	for (int i = 0; i < 10; i++) {
+	int numUnits = 10;
+	for (int i = 0; i < numUnits; i++) {
 
 		Coord dir; 
 
@@ -164,23 +169,23 @@ void Init()
 
 		if (counter == 0) {
 			dir = bgData->GetSpawnLocation(NORTH);
-			xVal = dir.x;
-			yVal = dir.y;
+			xVal = dir.x + ((rand() % 500 + 1 - i) + i);
+			yVal = dir.y + ((rand() % 500 + 1 - i) + i);
 		}
 		else if (counter == 1) {
 			dir = bgData->GetSpawnLocation(SOUTH);
-			xVal = dir.x;
-			yVal = dir.y;
+			xVal = dir.x + ((rand() % 500 + 1 - i) + i);
+			yVal = dir.y - ((rand() % 500 + 1 - i) + i);
 		}
 		else if (counter == 2) {
 			dir = bgData->GetSpawnLocation(EAST);
-			xVal = dir.x;
-			yVal = dir.y;
+			xVal = dir.x + ((rand() % 500 + 1 - i) + i);
+			yVal = dir.y - ((rand() % 100 + 1 - i) + i);
 		}
 		else if (counter == 3) {
 			dir = bgData->GetSpawnLocation(WEST);
-			xVal = dir.x;
-			yVal = dir.y;
+			xVal = dir.x - ((rand() % 500 + 1 - i) + i);
+			yVal = dir.y + ((rand() % 500 + 1 - i) + i);
 		}
 
 		if (counter < 4) {
@@ -226,7 +231,13 @@ void Update(float deltaTime)
 		
 		if (playerObject->intersects(units.at(i)) && IsKeyPressed(0x46)) {
 				units.at(i)->DeductHealth(1);
+				
 		}
+		if (units.at(i)->IsDead() && !(units.at(i)->IsMarkedDead())) {
+			scoreCounter++;
+			units.at(i)->MarkDead(); //Prevent score duplicates
+		}
+
 	}
 
 	//Write the Update(deltaTime) code for the mobs, and put the loop in that class
@@ -270,7 +281,7 @@ void Render()
 		borderDecor->Draw();
 	}
 
-
+	string score; 
 	for (int i = 0; i < 10; i++) {
 	//	Coord dir; 
 
@@ -306,9 +317,14 @@ void Render()
 	//		counter = 0;
 	//	}
 
-		if (!units.at(i)->isDead()) {
+		if (!units.at(i)->IsDead()) {
 			units.at(i)->GetObjectSprite()->Draw();
 		}
+		else {
+			score = to_string(scoreCounter);
+		}
+
+		App::Print(100, 100, (scoreText + score).c_str());
 
 	}
 
@@ -364,7 +380,9 @@ void Render()
 	//------------------------------------------------------------------------
 	// Example Text.
 	//------------------------------------------------------------------------
-	App::Print(100, 100, "Sample Text");
+	//App::Print(100, 100, "Sample Text");
+
+
 
 }
 //------------------------------------------------------------------------

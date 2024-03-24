@@ -76,10 +76,13 @@ public:
 	//Remove Health
 	void DeductHealth(int deduction);
 	//Is it dead? If not, deduct health points only
-	bool isDead();
+	bool IsDead();
+	bool IsMarkedDead();
+	void MarkDead();
 
 private:
 	string unitName;
 	float playerXPos;
 	float playerYPos;
+	bool markedDead = false; //to ensure that the scores don't stack
 };
