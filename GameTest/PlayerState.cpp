@@ -3,17 +3,22 @@
 
 void PlayerState::ResetPlayerStats()
 {
-	playerLives = 3;
+	playerLives = PLAYER_LIVES_DEFAULT;
+	score = 0;
 }
 
 void PlayerState::AddLife()
 {
-	playerLives++;
+	if (playerLives < PLAYER_LIVES_DEFAULT) {
+		playerLives++;
+	}
 }
 
 void PlayerState::RemoveLife()
 {
-	playerLives--;
+	if (playerLives > 0) {
+		playerLives--;
+	}
 }
 
 void PlayerState::AddScore(int amount)
@@ -37,3 +42,9 @@ int PlayerState::GetScore()
 {
 	return score;
 }
+
+int PlayerState::GetPesonalBest()
+{
+	return personalBest;
+}
+

@@ -6,6 +6,7 @@ MobUnit::MobUnit(CSimpleSprite* sprite, int healthPoints, float x, float y, floa
 	
 	objectSprite = sprite;
 	health = healthPoints;
+	fullHealth = healthPoints;
 	xPos = x;
 	yPos = y;
 	scale = mobScale;
@@ -59,16 +60,13 @@ void MobUnit::Update(float dTime, float playerX, float playerY)
 
 }
 
+
 void MobUnit::AnimateMobUnit(const std::vector<int>& backwards, const std::vector<int>& left, const std::vector<int>& right, const std::vector<int>& forwards)
 {
 	objectSprite->CreateAnimation(ANIM_BACKWARDS, speed, backwards);
 	objectSprite->CreateAnimation(ANIM_LEFT, speed, left);
 	objectSprite->CreateAnimation(ANIM_RIGHT, speed, right);
 	objectSprite->CreateAnimation(ANIM_FORWARDS, speed, forwards);
-}
-
-void MobUnit::AnimateMobDeath(const std::vector<int>& death) {
-	objectSprite->CreateAnimation(UNIT_DEATH, speed, death);
 }
 
 void MobUnit::SetPlayerLocation(float xCoord, float yCoord)
@@ -87,25 +85,12 @@ int MobUnit::GetType()
 	return MOB_UNIT;
 }
 
-void MobUnit::DeductHealth(int deduction)
+void MobUnit::RemoveHealth(int deduction)
 {
-	health = health - deduction;
-}
-
-void MobUnit::MarkDead()
-{
-	markedDead = true;
-}
-
-bool MobUnit::IsMarkedDead()
-{
-	return markedDead;
-}
-
-bool MobUnit::IsDead()
-{
-	if (health <= 0) {
-		deadStatus = true;
+	if (health - deduction < fullHealth) {
+		health = 0;
 	}
-	return deadStatus;
+	else {
+		health = health - deduction;
+	}
 }

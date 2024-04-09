@@ -20,7 +20,7 @@ Player::Player(CSimpleSprite* sprite, int xCoord, int yCoord, BackgroundData* ba
 	objectSprite->CreateAnimation(ANIM_ATTACK_NORTH, speed, { 48,49,50,51 });
 	
 	//Death
-	objectSprite->CreateAnimation(UNIT_DEATH, speed, {54,55,56});
+	objectSprite->CreateAnimation(UNIT_DEATH, 10, {54,55,56});
 
 	objectSprite->SetScale(1.5f);
 	objectSprite->SetPosition(xCoord, yCoord);
@@ -30,10 +30,7 @@ Player::Player(CSimpleSprite* sprite, int xCoord, int yCoord, BackgroundData* ba
 	xPos = xCoord;
 	yPos = yCoord;
 
-	//hitBox.left = xPos;
-	//hitBox.top = yPos;
-	//hitBox.right = xPos + objectSprite->GetWidth();
-	//hitBox.bottom = yPos + objectSprite->GetHeight();
+	health = PLAYER_FULL_HEALTH;
 
 }
 
@@ -48,7 +45,6 @@ void Player::Update(float dTime)
 	{
 		SetGoing(GOING_EAST);
 		objectSprite->SetAnimation(ANIM_RIGHT);
-		//movingDirection = ANIM_RIGHT;
 		objectSprite->GetPosition(xPos, yPos);
 
 		if (!CheckBoundaries(xPos, yPos)) {
@@ -57,26 +53,14 @@ void Player::Update(float dTime)
 		if (CheckBoundaries(xPos, yPos)) {
 			xPos -= 2.0f;
 		}
-		//else if (CheckBoundaries(xPos, yPos) || IsKeyPressed(App::GetController().GetLeftThumbStickX())) {
-		//	xPos += 1.0f;
-		//}
-		
-		//xPos += 1.0f;
-		objectSprite->SetPosition(xPos, yPos);
 
-		//if (IsKeyPressed(0x46)) {
-		//	//Facing west, moving east
-		//	playerSprite->SetAnimation(ANIM_ATTACK_WEST);
-		//	PlayerAttacking(ANIM_ATTACK_WEST);
-		//}
-		//PlayerAttacking(NO_ATTACK);
-		//playerSprite->SetAnimation(ANIM_RIGHT);
+		objectSprite->SetPosition(xPos, yPos);
 	}
 	if (App::GetController().GetLeftThumbStickX() < -0.5f)
 	{
 		SetGoing(GOING_WEST);
 		objectSprite->SetAnimation(ANIM_LEFT);
-		//movingDirection = ANIM_LEFT;
+
 		objectSprite->GetPosition(xPos, yPos);
 
 		if (!CheckBoundaries(xPos, yPos)) {
@@ -86,22 +70,12 @@ void Player::Update(float dTime)
 			xPos += 2.0f;
 		}
 
-		//xPos -= 1.0f;
 		objectSprite->SetPosition(xPos, yPos);
-
-		//if (IsKeyPressed(0x46)) {
-		//	//Facing east, moving west
-		//	playerSprite->SetAnimation(ANIM_ATTACK_EAST);
-		//	PlayerAttacking(ANIM_ATTACK_EAST);
-		//}
-		////PlayerAttacking(NO_ATTACK);
-		//playerSprite->SetAnimation(ANIM_LEFT);
 	}
 	if (App::GetController().GetLeftThumbStickY() > 0.5f)
 	{
 		SetGoing(GOING_NORTH);
 		objectSprite->SetAnimation(ANIM_BACKWARDS);
-		//movingDirection = ANIM_BACKWARDS;
 		objectSprite->GetPosition(xPos, yPos);
 
 		if (!CheckBoundaries(xPos, yPos)) {
@@ -111,22 +85,12 @@ void Player::Update(float dTime)
 			yPos -= 2.0f;
 		}
 
-		//yPos += 1.0f;
 		objectSprite->SetPosition(xPos, yPos);
-
-		//if (IsKeyPressed(0x46)) {
-		//	//Facing south, walking north
-		//	playerSprite->SetAnimation(ANIM_ATTACK_SOUTH);
-		//	PlayerAttacking(ANIM_ATTACK_SOUTH);
-		//}
-		////PlayerAttacking(NO_ATTACK);
-		//playerSprite->SetAnimation(ANIM_BACKWARDS);
 	}
 	if (App::GetController().GetLeftThumbStickY() < -0.5f)
 	{
 		SetGoing(GOING_SOUTH);
 		objectSprite->SetAnimation(ANIM_FORWARDS);
-		//movingDirection = ANIM_FORWARDS;
 		objectSprite->GetPosition(xPos, yPos);
 
 		if (!CheckBoundaries(xPos, yPos)) {
@@ -136,16 +100,8 @@ void Player::Update(float dTime)
 			yPos += 2.0f;
 		}
 		
-		//yPos -= 1.0f;
 		objectSprite->SetPosition(xPos, yPos);
 
-		//if (IsKeyPressed(0x46)) {
-		//	//Facing north, walking south
-		//	playerSprite->SetAnimation(ANIM_ATTACK_NORTH);
-		//	PlayerAttacking(ANIM_ATTACK_NORTH);
-		//}
-		////PlayerAttacking(NO_ATTACK);
-		//playerSprite->SetAnimation(ANIM_FORWARDS);
 	}
 	if (App::GetController().CheckButton(XINPUT_GAMEPAD_DPAD_UP, false))
 	{
@@ -168,31 +124,11 @@ void Player::Update(float dTime)
 		objectSprite->SetAnimation(-1);
 	}
 
+	objectSprite->GetPosition(xPos, yPos);
+	objectSprite->SetPosition(xPos, yPos);
+
 }
 
-//void Player::ResetPlayerStats()
-//{
-//	playerLives = 3;
-//}
-//
-//void Player::AddLife()
-//{
-//	playerLives++;
-//}
-//
-//void Player::RemoveLife()
-//{
-//	playerLives--;
-//
-//	if (playerLives == 0) {
-//		playerSprite->SetAnimation(UNIT_DEATH);
-//	}
-//}
-//
-//int Player::GetLives()
-//{
-//	return playerLives;
-//}
 
 void Player::SetGoing(int direction)
 {
@@ -209,6 +145,7 @@ void Player::SetGoing(int direction)
 		facing = GOING_EAST;
 	}
 }
+
 
 int Player::GetGoingDirection()
 {
@@ -248,6 +185,34 @@ bool Player::CheckBoundaries(float x, float y)
 	else if (x > maxXBorder) {
 		return true;
 	}
+	return false;
+}
+
+bool Player::intersects(GameObject* object)
+{
+
+	object->RefreshPosition();
+	RefreshPosition();
+
+	float yValue = 0;
+	float xValue = 0;
+	float xPosWithOffset = xPos + 8;
+	float yPosWithOffset = yPos - 10;
+
+
+	yValue = object->GetYPos();
+	xValue = object->GetXPos();
+
+	double calculation = 0;
+
+
+	calculation = sqrt(abs(pow(xPosWithOffset - xValue, 2)) + abs(pow((yPosWithOffset - yValue), 2)));
+
+	if (calculation < 20) {
+		return true;
+
+	}
+
 	return false;
 }
 

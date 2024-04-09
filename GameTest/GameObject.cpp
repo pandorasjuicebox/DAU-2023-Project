@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GameObject.h"
 
-int GameObject::GetHealth()
+float GameObject::GetHealth()
 {
     return health;
 }
@@ -11,9 +11,25 @@ CSimpleSprite* GameObject::GetObjectSprite()
     return objectSprite;
 }
 
-void GameObject::SetHealth(int deduction)
+void GameObject::RemoveHealth(float deduction)
 {
-    health = health - deduction;
+    if (health - deduction < PLAYER_NO_HEALTH) {
+        health = PLAYER_NO_HEALTH;
+    }
+    else {
+        health = health - deduction;
+    }
+}
+
+void GameObject::GainHealth(int addition)
+{
+
+    if (health + addition > PLAYER_FULL_HEALTH) {
+        health = PLAYER_FULL_HEALTH;
+    }
+    else {
+        health = health + addition;
+    }
 }
 
 void GameObject::RefreshPosition()
@@ -40,23 +56,21 @@ bool GameObject::intersects(GameObject* object)
 
     float yValue = 0;
     float xValue = 0;
+    float xPosWithOffset = xPos -  5;
+    float yPosWithOffset = yPos + 2;
 
 
     yValue = object->GetYPos();
     xValue = object->GetXPos();
 
-    /*if (yValue >= 0 && yValue <= objectSprite->GetWidth() && xValue >= 0 && xValue <= objectSprite->GetWidth()) {
-        return true;
-    }
-    
-    if (xValue <= 0 && xValue + objectSprite->GetWidth() >= xValue) {
-        return true;
-    }*/
+    double calculation = 0;
 
-    if (abs(yPos - yValue) <= abs(objectSprite->GetHeight()) && abs(xPos - xValue) <= abs(objectSprite->GetWidth())) {
-        return true;
-    }
 
+    calculation = sqrt(abs(pow(xPosWithOffset - xValue, 2)) + abs(pow((yPosWithOffset - yValue), 2)));
+
+    if (calculation < 10){
+          return true;
+    }
 
     return false;
 }
@@ -69,6 +83,17 @@ void GameObject::SetXPos(float x)
 void GameObject::SetYPos(float y)
 {
     yPos = y;
+}
+
+bool GameObject::IsDead()
+{
+    if (health <= 0) {
+        deadStatus = true;
+    }
+    else {
+        deadStatus = false;
+    }
+    return deadStatus;
 }
 
 

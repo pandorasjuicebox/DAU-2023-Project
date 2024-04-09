@@ -27,6 +27,9 @@
     <ClCompile Include="MobUnit.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameTestHelper.cpp" />
+    <ClCompile Include="MedItems.cpp" />
+    <ClCompile Include="LifeItems.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -54,11 +57,11 @@
     <ClInclude Include="stb_image\stb_image.h">
       <Filter>stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="BackgroundData.h" />
     <ClInclude Include="Definitions.h" />
     <ClInclude Include="MobHandler.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameTestHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">

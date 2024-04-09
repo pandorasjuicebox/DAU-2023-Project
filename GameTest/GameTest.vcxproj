@@ -182,9 +182,9 @@
     <ClInclude Include="App\SimpleController.h" />
     <ClInclude Include="App\SimpleSound.h" />
     <ClInclude Include="App\SimpleSprite.h" />
-    <ClInclude Include="BackgroundData.h" />
     <ClInclude Include="Definitions.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameTestHelper.h" />
     <ClInclude Include="MobHandler.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="stb_image\stb_image.h" />
@@ -200,6 +200,9 @@
     <ClCompile Include="BackgroundData.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTest.cpp" />
+    <ClCompile Include="GameTestHelper.cpp" />
+    <ClCompile Include="LifeItems.cpp" />
+    <ClCompile Include="MedItems.cpp" />
     <ClCompile Include="MobHandler.cpp" />
     <ClCompile Include="MobUnit.cpp" />
     <ClCompile Include="Player.cpp" />

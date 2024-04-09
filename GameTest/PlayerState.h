@@ -17,10 +17,12 @@ public:
 
 	int GetLives(); // current player lives
 	int GetScore(); 
+	int GetPesonalBest();
+
 
 
 private: 
-	int playerLives = 3; // default
+	int playerLives = PLAYER_LIVES_DEFAULT; // default
 	int score = 0;
 	int personalBest = 0;
 };

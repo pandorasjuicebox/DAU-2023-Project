@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "BackgroundData.h"
+#include "GameObject.h"
 using namespace std;
 
 BackgroundData::BackgroundData() {
@@ -20,6 +20,10 @@ BackgroundData::BackgroundData() {
 	xRightInnerBorder = 0;
 }
 
+void BackgroundData::Update(float deltaTime, CSimpleSprite* sprite) {
+	sprite->Update(deltaTime);
+}
+
 float BackgroundData::GetX(int index) {
 	return coordinates.at(index).x;
 }
@@ -30,6 +34,11 @@ float BackgroundData::GetY(int index) {
 
 int BackgroundData::GetSize() {
 	return coordinates.size();
+}
+
+bool BackgroundData::isThereAMedKit()
+{
+	return medKitState;
 }
 
 vector<Coord> BackgroundData::GetInnerBorderList()
@@ -88,7 +97,6 @@ float BackgroundData::MaxYValue(vector<Coord> list)
 	}
 
 	maxVal = *max_element(yValues.begin(), yValues.end());
-	cout << maxVal;
 
 	return maxVal;
 }
@@ -143,6 +151,7 @@ void BackgroundData::CreateBorders()
 
 void BackgroundData::CreateCardinalPoints()
 {
+	float offset = 100;
 	//North
 	spawnPoints[NORTH] = { (xRightOuterBorder / 2),yUpperOuterBorder - 100 };
 
@@ -150,7 +159,7 @@ void BackgroundData::CreateCardinalPoints()
 	spawnPoints[SOUTH] = { (xRightOuterBorder / 2), yLowerOuterBorder };
 
 	//East 
-	spawnPoints[EAST] = { xRightOuterBorder,(yUpperOuterBorder / 2) };
+	spawnPoints[EAST] = { xRightOuterBorder - offset,(yUpperOuterBorder / 2) };
 
 	//West
 	spawnPoints[WEST] = { xLeftOuterBorder, (yUpperOuterBorder / 2) };
@@ -172,6 +181,11 @@ void BackgroundData::AddFloorLocation(float x, float y)
 {
 	Coord coordinates = { x,y };
 	floorArea.push_back(coordinates);
+}
+
+void BackgroundData::SetMedKitStatus(bool status)
+{
+	medKitState = status;
 }
 
 CSimpleSprite* BackgroundData::GetBorderSprite(string spriteName) {
