@@ -9,10 +9,6 @@
   * [The Goal](#the-goal)
   * [Mechanics](#mechanics)
 * [Controls](#controls)
-* [Lore](#lore)
-  * [The World](#the-world)
-  * [Nightrunners](#nightrunners)
-  * [Security Alpha](#security-alpha)
 * [Acknowledgements](#acknowledgements)
  
 ## Introduction
