@@ -14,9 +14,6 @@
   * [Nightrunners](#nightrunners)
   * [Security Alpha](#security-alpha)
 * [Acknowledgements](#acknowledgements)
-  * [Game Engine](#game-engine)
-  * [Assets - Drawable](#assets---drawable)
-  * [Sound](#sound)
  
 ## Introduction
 Where are you? You don't know. All you know is that you woke up, picked up a strange note on the ground telling you, <i>"The game ends at 100"</i>.
